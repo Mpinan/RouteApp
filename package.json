@@ -1,0 +1,26 @@
+{
+  "name": "crud-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaitone/CRUD-in-JS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaitone/CRUD-in-JS/issues"
+  },
+  "homepage": "https://github.com/jaitone/CRUD-in-JS#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jest": "^25.1.0",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.2"
+  }
+}
