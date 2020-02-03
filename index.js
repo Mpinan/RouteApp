@@ -1,15 +1,19 @@
-const { Client } = require("pg");
+const express = require("express");
+const bodyParser = require("body-parser");
+const app = express();
+const port = 3000;
 
-const client = new Client({
-  user: "simone",
-  host: "localhost",
-  database: "Movies",
-  password: ""
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
+
+app.get("/", (request, response) => {
+  response.json({ info: "Node.js, Express, and Postgres API" });
 });
 
-client.connect();
-client.query("SELECT NOW()", (err, res) => {
-  console.log(err, "Error");
-  console.log(res, "Respuesta");
-  client.end();
+app.listen(port, () => {
+  console.log(`App running on port ${port}.`);
 });
