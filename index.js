@@ -1,8 +1,15 @@
 const { Client } = require("pg");
-const client = new Client();
+
+const client = new Client({
+  user: "simone",
+  host: "localhost",
+  database: "Movies",
+  password: ""
+});
 
 client.connect();
-client.query("SELECT $1::text as message", ["Hello world!"], (err, res) => {
-  console.log(err ? err.stack : res.rows[0].message); // Hello World!
+client.query("SELECT NOW()", (err, res) => {
+  console.log(err, "Error");
+  console.log(res, "Respuesta");
   client.end();
 });
