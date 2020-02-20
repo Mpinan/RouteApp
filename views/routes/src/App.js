@@ -1,26 +1,28 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import React, { Component } from "react";
+import { Container, Col } from "reactstrap";
+import SignUp from "./Components/Users/Signup";
 
-function App() {
-  function readMovies() {
-    fetch("http://localhost:3001/movies", {
-      method: "GET"
-    })
+class App extends Component {
+  createUser() {
+    fetch("http://localhost:3001/user")
       .then(response => response.json())
-
-      .catch(error => console.error("Error:", error))
-      .then(response => console.log("Success:", response));
-    console.log(response);
+      .then(items => this.setState({ items }))
+      .catch(err => console.log(err));
   }
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <a getMovies={readMovies()}>Learn React</a>
-      </header>
-    </div>
-  );
+  componentDidMount() {
+    this.createUser();
+  }
+
+  render() {
+    return (
+      <Container className="App">
+        <Col>
+          <SignUp buttonLabel="Sign up" />
+        </Col>
+      </Container>
+    );
+  }
 }
 
 export default App;

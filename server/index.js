@@ -4,9 +4,7 @@ const queries = require("./querys");
 const app = express();
 const port = 3001;
 const cors = require("cors"); // allows/disallows cross-site communication
-const morgan = require("morgan"); // logs requests
 const helmet = require("helmet"); // creates headers that protect from attacks (security)
-// require("dotenv").config();
 
 app.use(bodyParser.json());
 app.use(
@@ -28,17 +26,16 @@ const corsOptions = {
 
 app.use(helmet());
 app.use(cors(corsOptions));
-app.use(morgan("combined"));
 
 app.get("/", (request, response) => {
-  response.send([1, 2, 3]);
+  response.json({ info: "Node.js, Express, and Postgres API" });
 });
 
-app.get("/movies", queries.getUsers);
-app.get("/movies/:id", queries.getUserById);
-app.post("/movies", queries.createUser);
-app.put("/movies/:id", queries.updateUser);
-app.delete("/movies/:id", queries.deleteUser);
+app.get("/user", queries.getUsers);
+app.get("/user/:id", queries.getUserById);
+app.post("/user", queries.createUser);
+app.put("/user/:id", queries.updateUser);
+app.delete("/user/:id", queries.deleteUser);
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);

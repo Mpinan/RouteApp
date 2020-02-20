@@ -17,7 +17,7 @@ class SignUp extends Component {
   newUserAdd = e => {
     e.preventDefault();
     console.log(this.state);
-    fetch("http://localhost:3001/", {
+    fetch("http://localhost:3001/user", {
       method: "post",
       headers: {
         "Content-Type": "application/json"
@@ -60,8 +60,8 @@ class SignUp extends Component {
           <Label for="confirm">Confirm Email</Label>
           <Input
             type="text"
-            name="confirm"
-            id="confirm"
+            name="confirm_email"
+            id="confirm_email"
             onChange={this.onChange}
             value={
               this.state.confirm_email === null ? "" : this.state.confirm_email

@@ -11,4 +11,6 @@ CREATE TABLE users (
   last_login DATE
 );
 
+
+
 // psql -U postgres
