@@ -3,6 +3,7 @@ import { Route, Redirect, Switch } from "../node_modules/react-router-dom";
 import { Container, Col } from "reactstrap";
 import SignUp from "./Components/Users/Signup";
 import UserPage from "./Components/Users/UserPage";
+import NotFound from "./Components/notFound";
 
 class App extends Component {
   state = { redirect: null };
@@ -23,6 +24,12 @@ class App extends Component {
   render() {
     return (
       <Container className="App">
+        {/* <Switch> */}
+        {/* <Route path="/user/:id" component={UserPage}></Route>
+          <Route path="/not-found" component={NotFound}></Route> */}
+        {/* <Redirect from="/" exact to="/user" />
+          <Redirect to="/not-found" /> */}
+        {/* </Switch> */}
         <Col>
           <SignUp buttonLabel="Sign up" />
         </Col>
