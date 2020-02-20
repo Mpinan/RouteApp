@@ -1,4 +1,4 @@
-CREATE DATABASE Routes
+CREATE DATABASE Todo
 
 
 CREATE TABLE users (
@@ -10,6 +10,8 @@ CREATE TABLE users (
   date_created DATE,
   last_login DATE
 );
+
+DELETE FROM users
 
 
 

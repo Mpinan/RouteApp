@@ -31,7 +31,9 @@ app.get("/", (request, response) => {
   response.json({ info: "Node.js, Express, and Postgres API" });
 });
 
-app.get("/user", queries.getUsers);
+//routes
+
+app.get("/users", queries.getUsers);
 app.get("/user/:id", queries.getUserById);
 app.post("/user", queries.createUser);
 app.put("/user/:id", queries.updateUser);

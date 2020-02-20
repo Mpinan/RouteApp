@@ -1,4 +1,7 @@
 const Pool = require("pg").Pool;
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+const myPlaintextPassword = "s0//P4$$w0rD";
 const pool = new Pool({
   user: "postgres",
   host: "localhost",
@@ -27,33 +30,32 @@ const getUserById = (request, response) => {
   });
 };
 
+// const hashPassword = password => {
+//   return new Promise((resolve, reject) =>
+//     bcrypt.hash(password, 10, (err, hash) => {
+//       err ? reject(err) : resolve(hash);
+//     })
+//   );
+// };
+
 const createUser = (request, response) => {
   const date_created = new Date();
   const { username, email, password } = request.body;
-
-  pool.query(
-    "INSERT INTO users (username, email, date_created) VALUES ($1, $2, $3 )",
-    [username, email, date_created],
-    (error, results) => {
-      if (error) {
-        throw error;
-      }
-      response.status(201).send(`User added with ID: ${results.insertId}`);
-    }
-  );
+  bcrypt.genSalt(saltRounds, function(err, salt) {
+    bcrypt.hash(password, salt, function(err, hash) {
+      pool.query(
+        `INSERT INTO users (username, email, password, date_created) VALUES ($1, $2, $3, $4 )`,
+        [username, email, hash, date_created],
+        (error, results) => {
+          if (error) {
+            throw error;
+          }
+          response.status(201).send(`User added with ID: ${results.insertId}`);
+        }
+      );
+    });
+  });
 };
-
-// const putUserData = (req, res, db) => {
-//   const { uid, username, email, password } = req.body;
-//   db("users")
-//     .where({ uid })
-//     .update({ username, email, password })
-//     .returning("*")
-//     .then(item => {
-//       res.json(item);
-//     })
-//     .catch(err => res.status(400).json({ dbError: "db error" }));
-// };
 
 const updateUser = (request, response) => {
   const id = parseInt(request.params.id);
