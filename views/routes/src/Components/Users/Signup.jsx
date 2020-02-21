@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Route, Redirect, Switch } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 
 class SignUp extends Component {
@@ -7,7 +8,29 @@ class SignUp extends Component {
     username: "",
     email: "",
     confirm_email: "",
-    password: ""
+    password: "",
+    errors: {}
+  };
+
+  validate = () => {
+    const errors = {};
+    if (this.state.username.trim() === "") {
+      errors.username = "Username is required";
+    }
+    if (this.state.password.trim() === "") {
+      errors.password = "Password is required";
+    }
+    return Object.keys(errors).length === 0 ? null : errors;
+  };
+
+  handleLogin = e => {
+    e.preventDefault();
+
+    const errors = this.validate();
+    console.log(errors);
+    this.setState({ errors: errors || {} });
+    if (errors) return;
+    this.newUserAdd(e);
   };
 
   onChange = e => {
@@ -35,7 +58,7 @@ class SignUp extends Component {
 
   render() {
     return (
-      <Form onSubmit={this.newUserAdd}>
+      <Form onSubmit={this.handleLogin}>
         <FormGroup>
           <Label for="username">Username</Label>
           <Input
@@ -76,8 +99,10 @@ class SignUp extends Component {
             id="password"
             onChange={this.onChange}
             value={this.state.password === null ? "" : this.state.password}
+            errors={this.state.errors}
           />
         </FormGroup>
+
         <Button>Submit</Button>
       </Form>
     );
