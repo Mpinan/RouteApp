@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { BrowserRouter as Router } from "react-router-dom";
+import UserPage from "./UserPage";
 
 class SignUp extends Component {
   state = {
@@ -31,6 +33,7 @@ class SignUp extends Component {
     this.setState({ errors: errors || {} });
     if (errors) return;
     this.newUserAdd(e);
+    this.render();
   };
 
   onChange = e => {
