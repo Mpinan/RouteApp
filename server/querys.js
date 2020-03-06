@@ -20,13 +20,28 @@ const getUsers = (request, response) => {
 
 const getUserById = (request, response) => {
   const id = parseInt(request.params.id);
-
   pool.query("SELECT * FROM users WHERE uid = $1", [id], (error, results) => {
     if (error) {
       throw error;
     }
     response.status(200).json(results.rows);
   });
+};
+
+const getUserByEmail = (request, response) => {
+  const email = parseInt(request.params.email);
+  pool.query(
+    "SELECT * FROM users WHERE email = $1",
+    [email],
+    (error, results) => {
+      if (user) {
+        console.log("user already exists");
+      } else {
+        throw error;
+      }
+      response.status(200).json(results.rows);
+    }
+  );
 };
 
 const createUser = (request, response) => {
@@ -38,6 +53,8 @@ const createUser = (request, response) => {
         `INSERT INTO users (username, email, password, date_created) VALUES ($1, $2, $3, $4 )`,
         [username, email, hash, date_created],
         (error, results) => {
+          console.log(results);
+          getUserByEmail(request.body.email);
           if (error) {
             throw error;
           }

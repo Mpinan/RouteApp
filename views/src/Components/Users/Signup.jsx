@@ -9,7 +9,8 @@ class SignUp extends Component {
     email: "",
     confirm_email: "",
     password: "",
-    errors: {}
+    errors: {},
+    repetitionErrors: {}
   };
 
   validate = () => {
@@ -26,24 +27,56 @@ class SignUp extends Component {
     if (this.state.password.trim() === "") {
       errors.password = "Password is required";
     }
+
     return Object.keys(errors).length === 0 ? null : errors;
+  };
+
+  getUsers = () => {
+    fetch("http://localhost:3001/users")
+      .then(response => response.json())
+      .then(result => console.log(result))
+      .catch(err => console.log(err));
+  };
+  componentDidMount = () => {
+    this.getUsers();
+  };
+
+  repetition = () => {
+    let result = this.getUsers();
+    console.log(this.getUsers());
+    // result.forEach(row => {
+    //   const { email, username } = this.state;
+    //   const repetitionErrors = {};
+    //   if (username === row.username) {
+    //     console.log("username exists");
+    //     repetitionErrors.username = "Username already exists";
+    //   }
+    //   if (email === row.email) {
+    //     repetitionErrors.email = "Email already exists";
+    //   }
+    //   return Object.keys(repetitionErrors).length === 0
+    //     ? null
+    //     : repetitionErrors;
+    // });
   };
 
   handleLogin = e => {
     e.preventDefault();
-
     const errors = this.validate();
-    console.log(errors);
+    const repetitionErrors = this.repetition();
     this.setState({ errors: errors || {} });
-    if (errors) return;
+    this.setState({ repetitionErrors: repetitionErrors || {} });
+    if (errors || repetitionErrors) return;
     this.newUserAdd(e);
-    this.render();
+    // this.render();
   };
 
+  // Is used to store what the user is typing
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  // Sends a post request to create a new user
   newUserAdd = e => {
     e.preventDefault();
     console.log(this.state);
@@ -73,7 +106,7 @@ class SignUp extends Component {
             name="username"
             id="username"
             onChange={this.onChange}
-            value={this.state.username === null ? "" : this.state.username}
+            // value={this.state.username === null ? "" : this.state.username}
           />
         </FormGroup>
         <FormGroup>
@@ -83,7 +116,7 @@ class SignUp extends Component {
             name="email"
             id="email"
             onChange={this.onChange}
-            value={this.state.email === null ? "" : this.state.email}
+            // value={this.state.email === null ? "" : this.state.email}
           />
         </FormGroup>
         <FormGroup>
@@ -93,9 +126,9 @@ class SignUp extends Component {
             name="confirm_email"
             id="confirm_email"
             onChange={this.onChange}
-            value={
-              this.state.confirm_email === null ? "" : this.state.confirm_email
-            }
+            // value={
+            //   this.state.confirm_email === null ? "" : this.state.confirm_email
+            // }
           />
         </FormGroup>
         <FormGroup>
@@ -105,7 +138,7 @@ class SignUp extends Component {
             name="password"
             id="password"
             onChange={this.onChange}
-            value={this.state.password === null ? "" : this.state.password}
+            // value={this.state.password === null ? "" : this.state.password}
             errors={this.state.errors}
           />
         </FormGroup>
