@@ -1,7 +1,6 @@
 const Pool = require("pg").Pool;
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
-const myPlaintextPassword = "s0//P4$$w0rD";
 const pool = new Pool({
   user: "postgres",
   host: "localhost",
@@ -29,14 +28,6 @@ const getUserById = (request, response) => {
     response.status(200).json(results.rows);
   });
 };
-
-// const hashPassword = password => {
-//   return new Promise((resolve, reject) =>
-//     bcrypt.hash(password, 10, (err, hash) => {
-//       err ? reject(err) : resolve(hash);
-//     })
-//   );
-// };
 
 const createUser = (request, response) => {
   const date_created = new Date();

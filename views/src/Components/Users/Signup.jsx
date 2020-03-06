@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { Route, Redirect, Switch } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-import { BrowserRouter as Router } from "react-router-dom";
-import UserPage from "./UserPage";
+const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 class SignUp extends Component {
   state = {
@@ -16,6 +14,12 @@ class SignUp extends Component {
 
   validate = () => {
     const errors = {};
+    if (!this.state.email) {
+      errors.email = "Email is required";
+    }
+    if (this.state.email !== this.state.confirm_email) {
+      errors.confirm_email = "Email is different";
+    }
     if (this.state.username.trim() === "") {
       errors.username = "Username is required";
     }
