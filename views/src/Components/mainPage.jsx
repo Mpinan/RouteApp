@@ -24,16 +24,16 @@ const MainPage = props => {
         <Collapse isOpen={!collapsed} navbar>
           <Nav navbar>
             <NavItem>
-              <NavLink href="">About us</NavLink>
+              <NavLink href="/about">About us</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="">Contact me</NavLink>
+              <NavLink href="/contact">Contact me</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="">Log in</NavLink>
+              <NavLink href="/login">Log in</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="">Sign Up</NavLink>
+              <NavLink href="/signup">Sign Up</NavLink>
             </NavItem>
           </Nav>
         </Collapse>
