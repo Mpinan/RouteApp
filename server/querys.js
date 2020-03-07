@@ -34,17 +34,21 @@ const getUserByEmail = (request, response) => {
     "SELECT * FROM users WHERE email = $1",
     [email],
     (error, results) => {
-      if (user) {
+      if (email) {
+        console.log(email);
         console.log("user already exists");
-      } else {
         throw error;
+      } else {
+        console.log(results);
+        console.log("email after else");
+        return;
       }
-      response.status(200).json(results.rows);
     }
   );
 };
 
 const createUser = (request, response) => {
+  getUserByEmail(request, response);
   const date_created = new Date();
   const { username, email, password } = request.body;
   bcrypt.genSalt(saltRounds, function(err, salt) {
@@ -54,7 +58,7 @@ const createUser = (request, response) => {
         [username, email, hash, date_created],
         (error, results) => {
           console.log(results);
-          getUserByEmail(request.body.email);
+
           if (error) {
             throw error;
           }
@@ -67,11 +71,11 @@ const createUser = (request, response) => {
 
 const updateUser = (request, response) => {
   const id = parseInt(request.params.id);
-  const { name, email } = request.body;
+  const { username, email } = request.body;
 
   pool.query(
-    "UPDATE users SET name = $1, email = $2 WHERE uid = $3",
-    [name, email, id],
+    "UPDATE users SET username = $1, email = $2 WHERE uid = $3",
+    [username, email, id],
     (error, results) => {
       if (error) {
         throw error;
