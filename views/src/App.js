@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Col } from "reactstrap";
+import { Container } from "reactstrap";
 import { BrowserRouter, Route } from "react-router-dom";
 import SignUp from "./Components/Users/Signup";
 import MainPage from "./Components/mainPage";
