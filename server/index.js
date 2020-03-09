@@ -5,6 +5,7 @@ const app = express();
 const port = 3001;
 const cors = require("cors"); // allows/disallows cross-site communication
 const helmet = require("helmet"); // creates headers that protect from attacks (security)
+const { body } = require("express-validator");
 
 app.use(bodyParser.json());
 app.use(
@@ -35,7 +36,18 @@ app.get("/", (request, response) => {
 
 app.get("/users", queries.getUsers);
 app.get("/user/:id", queries.getUserById);
-app.post("/user", queries.createUser);
+app.post(
+  "/user",
+  body("email").custom(value => {
+    return User.findUserByEmail(value).then(user => {
+      console.log(user);
+      if (user) {
+        throw new Error("this email is already in use");
+      }
+    });
+  }),
+  queries.createUser
+);
 app.put("/user/:id", queries.updateUser);
 app.delete("/user/:id", queries.deleteUser);
 

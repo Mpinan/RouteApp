@@ -28,35 +28,31 @@ const getUserById = (request, response) => {
   });
 };
 
-// const getUserByEmail = (request, response) => {
-//   const email = parseInt(request.params.email);
-//   pool.query(
-//     "SELECT * FROM users WHERE email = $1",
-//     [email],
-//     (error, results) => {
-//       if (email) {
-//         console.log(email);
-//         console.log("user already exists");
-//         throw error;
-//       } else {
-//         console.log(results);
-//         console.log("email after else");
-//         return;
-//       }
-//     }
-//   );
-// };
+const findUserByEmail = email => {
+  // var request = new mssql.Request(conn);
+  pool.query("SELECT * FROM u_users WHERE email = '" + email + "'");
+  return query
+    .then(function(results) {
+      return results[0];
+    })
+    .catch(function(err) {
+      console.log("Error verifying email...");
+      console.log(err);
+      throw err;
+    });
+};
 
 const createUser = (request, response) => {
   const date_created = new Date();
   const { username, email, password } = request.body;
+
   bcrypt.genSalt(saltRounds, function(err, salt) {
     bcrypt.hash(password, salt, function(err, hash) {
       pool.query(
         `INSERT INTO users (username, email, password, date_created) VALUES ($1, $2, $3, $4 )`,
         [username, email, hash, date_created],
         (error, results) => {
-          console.log("---------->", email);
+          // console.log("---------->", email);
           if (error) {
             throw error;
           }
@@ -99,5 +95,6 @@ module.exports = {
   getUserById,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  findUserByEmail
 };
