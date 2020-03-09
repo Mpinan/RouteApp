@@ -28,18 +28,20 @@ const getUserById = (request, response) => {
   });
 };
 
-const findUserByEmail = email => {
-  // var request = new mssql.Request(conn);
-  pool.query("SELECT * FROM u_users WHERE email = '" + email + "'");
-  return query
-    .then(function(results) {
-      return results[0];
-    })
-    .catch(function(err) {
-      console.log("Error verifying email...");
-      console.log(err);
-      throw err;
-    });
+const findUserByEmail = (email, response) => {
+  console.log(email, "---------------4");
+  pool.query(
+    console.log(email, "-------------5"),
+    console.log("Hello query"),
+    `SELECT * FROM users WHERE email = ${email}`,
+    (error, results) => {
+      console.log(error, "I am a result");
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows);
+    }
+  );
 };
 
 const createUser = (request, response) => {

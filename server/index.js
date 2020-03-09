@@ -5,7 +5,6 @@ const app = express();
 const port = 3001;
 const cors = require("cors"); // allows/disallows cross-site communication
 const helmet = require("helmet"); // creates headers that protect from attacks (security)
-const { body } = require("express-validator");
 
 app.use(bodyParser.json());
 app.use(
@@ -32,22 +31,25 @@ app.get("/", (request, response) => {
   response.json({ info: "Node.js, Express, and Postgres API" });
 });
 
-//routes
+//Routes
 
 app.get("/users", queries.getUsers);
 app.get("/user/:id", queries.getUserById);
-app.post(
-  "/user",
-  body("email").custom(value => {
-    return User.findUserByEmail(value).then(user => {
-      console.log(user);
-      if (user) {
-        throw new Error("this email is already in use");
-      }
-    });
-  }),
-  queries.createUser
-);
+
+app.post("/signup/user", (req, res, next) => {
+  console.log(req.body.email, "----------1");
+  console.log(queries.findUserByEmail(req.body.email), "-----------3");
+
+  queries.findUserByEmail(req.body.email).then(user => {
+    console.log(user);
+    console.log(value, "---------------4");
+    // if (user) {
+    //   throw new Error("this email is already in use");
+    // }
+  });
+  queries.createUser;
+});
+
 app.put("/user/:id", queries.updateUser);
 app.delete("/user/:id", queries.deleteUser);
 

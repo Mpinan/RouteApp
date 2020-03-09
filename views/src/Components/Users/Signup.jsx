@@ -48,7 +48,7 @@ class SignUp extends Component {
   newUserAdd = e => {
     e.preventDefault();
     console.log(this.state);
-    fetch("http://localhost:3001/user", {
+    fetch("http://localhost:3001/signup/user", {
       method: "post",
       headers: {
         "Content-Type": "application/json"
