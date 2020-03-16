@@ -42,10 +42,10 @@ app.post("/signup/user", (req, res, next) => {
 
   queries.findUserByEmail(req.body.email).then(user => {
     console.log(user);
-    console.log(value, "---------------4");
-    // if (user) {
-    //   throw new Error("this email is already in use");
-    // }
+    console.log(value, "---------------2");
+    if (user) {
+      throw new Error("this email is already in use");
+    }
   });
   queries.createUser;
 });

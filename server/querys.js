@@ -31,14 +31,17 @@ const getUserById = (request, response) => {
 const findUserByEmail = (email, response) => {
   console.log(email, "---------------4");
   pool.query(
-    console.log(email, "-------------5"),
+    console.log(email, "---------------5"),
     console.log("Hello query"),
-    `SELECT * FROM users WHERE email = ${email}`,
+    "SELECT * FROM users WHERE email = $1,",
+    [email],
+    console.log([email]),
     (error, results) => {
-      console.log(error, "I am a result");
+      console.log(results, "I am a result");
       if (error) {
         throw error;
       }
+      console.log(email, "--------------6");
       response.status(200).json(results.rows);
     }
   );
