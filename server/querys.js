@@ -28,26 +28,13 @@ const getUserById = (request, response) => {
   });
 };
 
-const findUserByEmail = (email, response) => {
-  console.log(email, "---------------4");
-  pool.query(
-    console.log(email, "---------------5"),
-    console.log("Hello query"),
-    "SELECT * FROM users WHERE email = $1,",
-    [email],
-    console.log([email]),
-    (error, results) => {
-      console.log(results, "I am a result");
-      if (error) {
-        throw error;
-      }
-      console.log(email, "--------------6");
-      response.status(200).json(results.rows);
-    }
-  );
+const findUserByEmail = email => {
+  return pool.query("SELECT * FROM users WHERE email = $1", [email]);
 };
 
 const createUser = (request, response) => {
+  console.log(request, "----1");
+  console.log(response, "-----2");
   const date_created = new Date();
   const { username, email, password } = request.body;
 

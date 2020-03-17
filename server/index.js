@@ -38,16 +38,21 @@ app.get("/user/:id", queries.getUserById);
 
 app.post("/signup/user", (req, res, next) => {
   console.log(req.body.email, "----------1");
-  console.log(queries.findUserByEmail(req.body.email), "-----------3");
-
-  queries.findUserByEmail(req.body.email).then(user => {
-    console.log(user);
-    console.log(value, "---------------2");
-    if (user) {
-      throw new Error("this email is already in use");
-    }
-  });
-  queries.createUser;
+  queries
+    .findUserByEmail(req.body.email)
+    .then(user => {
+      console.log(user.rows.length);
+      if (user.rows.length < 0) {
+        res.status(400).send("this email is already in use");
+      } else {
+        console.log("Hello");
+        queries.createUser;
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send("Something went wrong");
+    });
 });
 
 app.put("/user/:id", queries.updateUser);
