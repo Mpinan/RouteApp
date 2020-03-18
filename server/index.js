@@ -38,6 +38,7 @@ app.get("/user/:id", queries.getUserById);
 
 app.post("/signup/user", (req, res, next) => {
   console.log(req.body.email, "----------1");
+  // console.log(queries.findUserByEmail(req.body.email));
   queries
     .findUserByEmail(req.body.email)
     .then(user => {

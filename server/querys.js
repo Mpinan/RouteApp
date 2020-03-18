@@ -29,7 +29,13 @@ const getUserById = (request, response) => {
 };
 
 const findUserByEmail = email => {
-  return pool.query("SELECT * FROM users WHERE email = $1", [email]);
+  pool.query("SELECT * FROM users WHERE email = $1", [email]);
+  if (email) {
+    return;
+  }
+  // else {
+  //   console.log("Email in use");
+  // }
 };
 
 const createUser = (request, response) => {
