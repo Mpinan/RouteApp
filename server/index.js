@@ -52,8 +52,6 @@ app.post("/signup/user", (req, res, next) => {
   // });
 });
 
-app.post("/signup/user", queries.createUser);
-
 app.put("/user/:id", queries.updateUser);
 app.delete("/user/:id", queries.deleteUser);
 
