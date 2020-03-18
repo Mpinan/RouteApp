@@ -29,20 +29,24 @@ const getUserById = (request, response) => {
 };
 
 const findUserByEmail = email => {
-  pool.query("SELECT * FROM users WHERE email = $1", [email]);
-  if (email) {
-    return;
-  }
-  // else {
-  //   console.log("Email in use");
-  // }
+  pool.query(
+    "SELECT * FROM users WHERE email = $1",
+    [email],
+    (error, results) => {
+      if (results.rows.length > 0) {
+        console.log("Email already exists");
+        throw error;
+      } else {
+        return;
+      }
+    }
+  );
 };
 
 const createUser = (request, response) => {
-  console.log(request, "----1");
-  console.log(response, "-----2");
+  console.log(request, "----- -2");
   const date_created = new Date();
-  const { username, email, password } = request.body;
+  const { username, email, password } = request;
 
   bcrypt.genSalt(saltRounds, function(err, salt) {
     bcrypt.hash(password, salt, function(err, hash) {
@@ -54,7 +58,7 @@ const createUser = (request, response) => {
           if (error) {
             throw error;
           }
-          response.status(201).send(`User added with ID: ${results.insertId}`);
+          // response.status(201).send(`User added with ID: ${results.insertId}`);
         }
       );
     });

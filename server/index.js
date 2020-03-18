@@ -37,24 +37,22 @@ app.get("/users", queries.getUsers);
 app.get("/user/:id", queries.getUserById);
 
 app.post("/signup/user", (req, res, next) => {
-  console.log(req.body.email, "----------1");
-  // console.log(queries.findUserByEmail(req.body.email));
-  queries
-    .findUserByEmail(req.body.email)
-    .then(user => {
-      console.log(user.rows.length);
-      if (user.rows.length < 0) {
-        res.status(400).send("this email is already in use");
-      } else {
-        console.log("Hello");
-        queries.createUser;
-      }
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).send("Something went wrong");
-    });
+  console.log(req.body, "----------1");
+  queries.findUserByEmail(req.body.email);
+
+  queries.createUser(req.body);
+
+  // .then(user => {
+  //   console.log(user.rows.length);
+
+  // })
+  // .catch(err => {
+  //   console.log(err);
+  //   res.status(500).send("Something went wrong");
+  // });
 });
+
+app.post("/signup/user", queries.createUser);
 
 app.put("/user/:id", queries.updateUser);
 app.delete("/user/:id", queries.deleteUser);
