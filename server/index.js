@@ -37,10 +37,11 @@ app.get("/users", queries.getUsers);
 app.get("/user/:id", queries.getUserById);
 
 app.post("/signup/user", (req, res, next) => {
-  console.log(req.body, "----------1");
-  queries.findUserByEmail(req.body.email);
+  // console.log(res.status, "res");
+  // console.log(req.body, "----------1");
+  queries.findUserByEmail(req.body.email, res);
 
-  queries.createUser(req.body);
+  queries.createUser(req.body, res);
 
   // .then(user => {
   //   console.log(user.rows.length);

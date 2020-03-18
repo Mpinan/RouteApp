@@ -28,7 +28,7 @@ const getUserById = (request, response) => {
   });
 };
 
-const findUserByEmail = email => {
+const findUserByEmail = (email, res) => {
   pool.query(
     "SELECT * FROM users WHERE email = $1",
     [email],
@@ -37,6 +37,7 @@ const findUserByEmail = email => {
         console.log("Email already exists");
         throw error;
       } else {
+        // res.status(200).json(results.rows);
         return;
       }
     }
@@ -44,6 +45,7 @@ const findUserByEmail = email => {
 };
 
 const createUser = (request, response) => {
+  console.log(response, "Response");
   console.log(request, "----- -2");
   const date_created = new Date();
   const { username, email, password } = request;
@@ -58,7 +60,7 @@ const createUser = (request, response) => {
           if (error) {
             throw error;
           }
-          // response.status(201).send(`User added with ID: ${results.insertId}`);
+          response.status(201).send(`User added with ID: ${results.insertId}`);
         }
       );
     });

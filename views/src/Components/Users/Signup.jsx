@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Redirect } from "react-router-dom";
 // const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 class SignUp extends Component {
@@ -9,7 +10,8 @@ class SignUp extends Component {
     email: "",
     confirm_email: "",
     password: "",
-    errors: {}
+    errors: {},
+    redirect: false
   };
 
   validate = () => {
@@ -35,6 +37,7 @@ class SignUp extends Component {
     const errors = this.validate();
     this.setState({ errors: errors || {} });
     if (errors) return;
+    console.log(this.state, "this is empty");
     this.newUserAdd(e);
     // this.render();
   };
@@ -59,14 +62,26 @@ class SignUp extends Component {
         confirm_email: this.state.confirm_email,
         password: this.state.password
       })
-    })
-      .then(response => response.json())
-      .catch(err => console.log(err));
+    }).then(response => response.json());
+    // .then(response => console.log(response))
+    // .catch(err => console.log(err));
   };
+
+  setRedirect() {
+    console.log("hello");
+    this.setState({ redirect: true });
+  }
+
+  renderRedirect() {
+    if (this.state.redirect) {
+      return <Redirect to="/" />;
+    }
+  }
 
   render() {
     return (
-      <Form style={{ margin: "50px 0" }} onSubmit={this.handleLogin}>
+      <Form style={{ margin: "50px 0" }} onSubmit={this.handleLogin.bind(this)}>
+        {this.renderRedirect()}
         <FormGroup>
           <Label for="username">Username</Label>
           <Input
