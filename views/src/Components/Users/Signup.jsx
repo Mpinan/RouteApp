@@ -37,7 +37,6 @@ class SignUp extends Component {
     const errors = this.validate();
     this.setState({ errors: errors || {} });
     if (errors) return;
-    console.log(this.state, "this is empty");
     this.newUserAdd(e);
     // this.render();
   };
@@ -50,7 +49,7 @@ class SignUp extends Component {
   // Sends a post request to create a new user
   newUserAdd = e => {
     e.preventDefault();
-    console.log(this.state);
+    console.log(this.state, "----1");
     fetch("http://localhost:3001/signup/user", {
       method: "post",
       headers: {
@@ -62,9 +61,10 @@ class SignUp extends Component {
         confirm_email: this.state.confirm_email,
         password: this.state.password
       })
-    }).then(response => response.json());
-    // .then(response => console.log(response))
-    // .catch(err => console.log(err));
+    })
+      .then(response => response.json())
+      .then(response => console.log(response))
+      .catch(err => console.log(err));
   };
 
   setRedirect() {

@@ -37,20 +37,26 @@ app.get("/users", queries.getUsers);
 app.get("/user/:id", queries.getUserById);
 
 app.post("/signup/user", (req, res, next) => {
-  // console.log(res.status, "res");
-  // console.log(req.body, "----------1");
-  queries.findUserByEmail(req.body.email, res);
-
-  queries.createUser(req.body, res);
-
-  // .then(user => {
-  //   console.log(user.rows.length);
-
-  // })
-  // .catch(err => {
-  //   console.log(err);
-  //   res.status(500).send("Something went wrong");
-  // });
+  console.log(req.body.email, "----------1");
+  queries
+    .findUserByEmail(req.body.email)
+    .then(user => {
+      console.log(user.rows.length);
+      if (user.rows.length > 0) {
+        console.log("Email in use");
+        res.status(400).send("this email is already in use");
+      } else {
+        // console.log(res);
+        console.log("Before");
+        queries.createUser(req.body, res);
+        console.log("After");
+        res.status(201).send("Mail added");
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send("Something went wrong");
+    });
 });
 
 app.put("/user/:id", queries.updateUser);

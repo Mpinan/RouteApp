@@ -28,25 +28,11 @@ const getUserById = (request, response) => {
   });
 };
 
-const findUserByEmail = (email, res) => {
-  pool.query(
-    "SELECT * FROM users WHERE email = $1",
-    [email],
-    (error, results) => {
-      if (results.rows.length > 0) {
-        console.log("Email already exists");
-        throw error;
-      } else {
-        // res.status(200).json(results.rows);
-        return;
-      }
-    }
-  );
+const findUserByEmail = email => {
+  return pool.query("SELECT * FROM users WHERE email = $1", [email]);
 };
 
 const createUser = (request, response) => {
-  console.log(response, "Response");
-  console.log(request, "----- -2");
   const date_created = new Date();
   const { username, email, password } = request;
 
@@ -56,11 +42,9 @@ const createUser = (request, response) => {
         `INSERT INTO users (username, email, password, date_created) VALUES ($1, $2, $3, $4 )`,
         [username, email, hash, date_created],
         (error, results) => {
-          // console.log("---------->", email);
           if (error) {
             throw error;
           }
-          response.status(201).send(`User added with ID: ${results.insertId}`);
         }
       );
     });
