@@ -64,8 +64,8 @@ class SignUp extends Component {
     })
       .then(response => response.json())
       .then(response => console.log(response))
-      .then(response => this.setRedirect())
       .catch(err => console.log(err));
+    this.setRedirect();
   };
 
   setRedirect() {
