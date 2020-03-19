@@ -2,10 +2,10 @@ const Pool = require("pg").Pool;
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const pool = new Pool({
-  user: "leo",
+  user: "postgres",
   host: "localhost",
   database: "todo",
-  password: "MyNewPassword",
+  password: "Llatrese34",
   port: 5432
 });
 
