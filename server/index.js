@@ -50,7 +50,6 @@ app.post("/signup/user", (req, res, next) => {
         console.log("Before");
         queries.createUser(req.body, res);
         console.log("After");
-        res.status(201).send("Mail added");
       }
     })
     .catch(err => {

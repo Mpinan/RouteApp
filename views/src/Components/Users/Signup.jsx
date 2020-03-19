@@ -64,6 +64,7 @@ class SignUp extends Component {
     })
       .then(response => response.json())
       .then(response => console.log(response))
+      .then(response => this.setRedirect())
       .catch(err => console.log(err));
   };
 
@@ -126,7 +127,9 @@ class SignUp extends Component {
           />
         </FormGroup>
 
-        <Button>Submit</Button>
+        <Button color="secondary" size="lg" block>
+          Submit
+        </Button>
       </Form>
     );
   }

@@ -42,9 +42,11 @@ const createUser = (request, response) => {
         `INSERT INTO users (username, email, password, date_created) VALUES ($1, $2, $3, $4 )`,
         [username, email, hash, date_created],
         (error, results) => {
+          // console.log("---------->", email);
           if (error) {
             throw error;
           }
+          response.status(201).send(`User added`);
         }
       );
     });
