@@ -34,22 +34,23 @@ app.get("/", (request, response) => {
 //Routes
 
 app.get("/users", queries.getUsers);
-app.get("/user/:id", queries.getUserById);
+app.get("/user/:id", (req, res, next) => {
+  console.log(req);
+  queries.findUserByEmail(req.body.email).then(user => {
+    console.log(user);
+  });
+});
 
 app.post("/signup/user", (req, res, next) => {
   console.log(req.body.email, "----------1");
   queries
     .findUserByEmail(req.body.email)
     .then(user => {
-      console.log(user.rows.length);
       if (user.rows.length > 0) {
         console.log("Email in use");
         res.status(400).send("this email is already in use");
       } else {
-        // console.log(res);
-        console.log("Before");
         queries.createUser(req.body, res);
-        console.log("After");
       }
     })
     .catch(err => {

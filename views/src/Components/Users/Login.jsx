@@ -7,7 +7,8 @@ class Login extends Component {
     redirect: false,
     email: "",
     password: "",
-    errors: {}
+    errors: {},
+    login: false
   };
 
   validate = () => {
@@ -21,6 +22,15 @@ class Login extends Component {
     }
 
     return Object.keys(errors).length === 0 ? null : errors;
+  };
+
+  findUser = () => {
+    console.log(this.state);
+    fetch("http://localhost:3001/user/:id")
+      .then(response => response.json())
+      .then(result => console.log(result))
+      .catch(err => console.log(err));
+    this.setRedirect();
   };
 
   handlePassword = event => {
@@ -38,8 +48,9 @@ class Login extends Component {
   handleLogin = e => {
     e.preventDefault();
     const errors = this.validate();
-    this.setState({ errors: errors || {} });
+    this.setState({ errors });
     if (errors) return;
+    this.findUser();
     this.setRedirect();
   };
 

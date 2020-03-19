@@ -35,7 +35,7 @@ class SignUp extends Component {
   handleLogin = e => {
     e.preventDefault();
     const errors = this.validate();
-    this.setState({ errors: errors || {} });
+    this.setState({ errors });
     if (errors) return;
     this.newUserAdd(e);
     // this.render();
