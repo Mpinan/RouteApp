@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 class Login extends Component {
   state = {
     redirect: false,
-    email: "",
+    username: "",
     password: "",
     errors: {},
     login: false
@@ -14,8 +14,8 @@ class Login extends Component {
   validate = () => {
     const errors = {};
 
-    if (this.state.email.trim() === "") {
-      errors.email = "Username is required";
+    if (this.state.username.trim() === "") {
+      errors.username = "Username is required";
     }
     if (this.state.password.trim() === "") {
       errors.password = "Password is required";
@@ -31,7 +31,7 @@ class Login extends Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        email: this.state.email,
+        username: this.state.username,
         password: this.state.password
       })
     })
@@ -47,9 +47,9 @@ class Login extends Component {
     });
   };
 
-  handleEmail = event => {
+  handleUsername = event => {
     this.setState({
-      email: event.target.value
+      username: event.target.value
     });
   };
 
@@ -80,16 +80,16 @@ class Login extends Component {
         {this.renderRedirect()}
         <FormGroup row>
           <Label for="exampleEmail" sm={2} size="lg">
-            Email
+            Username
           </Label>
           <Col sm={10}>
             <Input
-              type="email"
-              name="email"
+              type="username"
+              name="username"
               id="exampleEmail"
-              placeholder="email"
+              placeholder="username"
               bsSize="lg"
-              onChange={this.handleEmail.bind(this)}
+              onChange={this.handleUsername.bind(this)}
             />
           </Col>
         </FormGroup>

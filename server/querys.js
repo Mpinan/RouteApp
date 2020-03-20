@@ -29,7 +29,42 @@ const getUserById = (request, response) => {
   });
 };
 
-const findUserByEmail = email => {
+const findUserByUsername = (username, password, response) => {
+  pool
+    .query("SELECT * FROM users WHERE username = $1", [username])
+    // .then(user => console.log(user, "I am a username"))
+    .then(user => {
+      const hash = user.rows[0].password;
+      bcrypt
+        .compare(password, hash)
+        .then(function(results) {
+          console.log(results, "----results");
+          if (results) {
+            console.log(hash);
+            console.log(response);
+            console.log("Login success");
+            // if (user.rows.length === 1) {
+            //   console.log(user.rows);
+            // }
+            return response.status(200).json({ msg: "Login success" });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(500).send("Something went wrong");
+        });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send("Something went wrong");
+    });
+};
+
+const findUserByEmail = (email, res) => {
+  if (error) {
+    throw error;
+  }
+
   return pool.query("SELECT * FROM users WHERE email = $1", [email]);
 };
 
@@ -47,11 +82,11 @@ const createUser = (request, response) => {
           if (error) {
             throw error;
           }
-          response.status(201).send(`User added`);
         }
       );
     });
   });
+  return response.status(201).send(`User added`);
 };
 
 const updateUser = (request, response) => {
@@ -87,5 +122,6 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
-  findUserByEmail
+  findUserByEmail,
+  findUserByUsername
 };

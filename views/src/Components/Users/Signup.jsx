@@ -62,10 +62,8 @@ class SignUp extends Component {
         password: this.state.password
       })
     })
-      .then(response => response.json())
-      .then(response => console.log(response))
+      .then(response => response.json(), this.setRedirect())
       .catch(err => console.log(err));
-    this.setRedirect();
   };
 
   setRedirect() {

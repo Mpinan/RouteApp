@@ -42,23 +42,21 @@ app.get("/user/:id", (req, res, next) => {
 });
 
 app.post("/login/user", (req, res, next) => {
-  console.log(req.body.email, "----------");
-  queries.findUserByEmail(req.body.email).then(user => {
-    if (req.body.email === undefined) {
-      console.log("That user does not exists");
-    }
-    if (user.rows[0].email === req.body.email) {
-      console.log(user.rows[0].email);
-    }
-  });
+  console.log(req.body.password, "----------");
+  queries.findUserByUsername(req.body.username, req.body.password, res);
+  // .then(user => {
+  //   if (user.rows[0].username === req.body.username) {
+  //     console.log(user.rows[0].username);
+  //   }
+  // });
 });
 
 app.post("/signup/user", (req, res, next) => {
   queries
-    .findUserByEmail(req.body.email)
+    .findUserByEmail(req.body.email, res)
     .then(user => {
       if (user.rows.length > 0) {
-        console.log("Email in use");
+        console.log(res, "----res in sign up user");
         res.status(400).send("this email is already in use");
       } else {
         queries.createUser(req.body, res);
