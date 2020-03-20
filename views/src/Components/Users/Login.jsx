@@ -25,8 +25,16 @@ class Login extends Component {
   };
 
   findUser = () => {
-    console.log(this.state);
-    fetch("http://localhost:3001/user/:id")
+    fetch("http://localhost:3001/login/user", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password
+      })
+    })
       .then(response => response.json())
       .then(result => console.log(result))
       .catch(err => console.log(err));

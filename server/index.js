@@ -41,8 +41,19 @@ app.get("/user/:id", (req, res, next) => {
   });
 });
 
+app.post("/login/user", (req, res, next) => {
+  console.log(req.body.email, "----------");
+  queries.findUserByEmail(req.body.email).then(user => {
+    if (req.body.email === undefined) {
+      console.log("That user does not exists");
+    }
+    if (user.rows[0].email === req.body.email) {
+      console.log(user.rows[0].email);
+    }
+  });
+});
+
 app.post("/signup/user", (req, res, next) => {
-  console.log(req.body.email, "----------1");
   queries
     .findUserByEmail(req.body.email)
     .then(user => {
