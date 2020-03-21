@@ -37,7 +37,7 @@ const findUserByUsername = (username, password, response) => {
       const hash = user.rows[0].password;
       bcrypt
         .compare(password, hash)
-        .then(function(results) {
+        .then(results => {
           console.log(results, "----results");
           if (results) {
             console.log(hash);
@@ -60,12 +60,8 @@ const findUserByUsername = (username, password, response) => {
     });
 };
 
-const findUserByEmail = (email, res) => {
-  if (error) {
-    throw error;
-  }
-
-  return pool.query("SELECT * FROM users WHERE email = $1", [email]);
+const findUserByEmail = req => {
+  return pool.query("SELECT * FROM users WHERE email = $1", [req.body.email]);
 };
 
 const createUser = (request, response) => {

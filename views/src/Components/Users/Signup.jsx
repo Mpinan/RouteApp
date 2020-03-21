@@ -62,7 +62,13 @@ class SignUp extends Component {
         password: this.state.password
       })
     })
-      .then(response => response.json(), this.setRedirect())
+      .then(response => {
+        if (response.json().status === 200 || 201) {
+          this.setRedirect();
+        } else {
+          console.log("this email is already in use");
+        }
+      })
       .catch(err => console.log(err));
   };
 

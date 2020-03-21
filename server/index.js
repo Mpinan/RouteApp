@@ -53,10 +53,10 @@ app.post("/login/user", (req, res, next) => {
 
 app.post("/signup/user", (req, res, next) => {
   queries
-    .findUserByEmail(req.body.email, res)
+    .findUserByEmail(req)
     .then(user => {
       if (user.rows.length > 0) {
-        console.log(res, "----res in sign up user");
+        // console.log(res, "----res in sign up user");
         res.status(400).send("this email is already in use");
       } else {
         queries.createUser(req.body, res);
