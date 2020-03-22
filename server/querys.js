@@ -29,10 +29,9 @@ const getUserById = (request, response) => {
   });
 };
 
-const findUserByUsername = (username, password, response) => {
+const findUserByUsername = (username, password) => {
   pool
     .query("SELECT * FROM users WHERE username = $1", [username])
-    // .then(user => console.log(user, "I am a username"))
     .then(user => {
       const hash = user.rows[0].password;
       bcrypt
@@ -40,23 +39,16 @@ const findUserByUsername = (username, password, response) => {
         .then(results => {
           console.log(results, "----results");
           if (results) {
-            console.log(hash);
-            console.log(response);
             console.log("Login success");
-            // if (user.rows.length === 1) {
-            //   console.log(user.rows);
-            // }
-            return response.status(200).json({ msg: "Login success" });
+            return;
           }
         })
         .catch(err => {
           console.log(err);
-          res.status(500).send("Something went wrong");
         });
     })
     .catch(err => {
       console.log(err);
-      res.status(500).send("Something went wrong");
     });
 };
 

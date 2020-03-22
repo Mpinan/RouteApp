@@ -8,7 +8,8 @@ class Login extends Component {
     username: "",
     password: "",
     errors: {},
-    login: false
+    login: false,
+    session: []
   };
 
   validate = () => {
@@ -36,9 +37,8 @@ class Login extends Component {
       })
     })
       .then(response => response.json())
-      .then(result => console.log(result))
-      .catch(err => console.log(err));
-    this.setRedirect();
+      .catch(err => console.log(err))
+      .then(this.setRedirect());
   };
 
   handlePassword = event => {
@@ -59,13 +59,17 @@ class Login extends Component {
     this.setState({ errors });
     if (errors) return;
     this.findUser();
-    this.setRedirect();
+    this.setState({ login: true });
+    this.setState({
+      session: this.state.username
+    });
   };
 
   setRedirect() {
     this.setState({
       redirect: true
     });
+    console.log(this.state);
   }
 
   renderRedirect() {

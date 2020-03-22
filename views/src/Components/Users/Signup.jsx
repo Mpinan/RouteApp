@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { Redirect } from "react-router-dom";
+import UserPage from "./UserPage";
 // const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 class SignUp extends Component {
@@ -62,14 +63,13 @@ class SignUp extends Component {
         password: this.state.password
       })
     })
-      .then(response => {
-        if (response.json().status === 200 || 201) {
-          this.setRedirect();
-        } else {
-          console.log("this email is already in use");
+      .then(response => response.json())
+      .catch(err => {
+        if (err) {
+          console.log(err, "---hola");
         }
       })
-      .catch(err => console.log(err));
+      .then(this.setRedirect());
   };
 
   setRedirect() {

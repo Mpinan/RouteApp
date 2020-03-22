@@ -43,12 +43,21 @@ app.get("/user/:id", (req, res, next) => {
 
 app.post("/login/user", (req, res, next) => {
   console.log(req.body.password, "----------");
-  queries.findUserByUsername(req.body.username, req.body.password, res);
-  // .then(user => {
-  //   if (user.rows[0].username === req.body.username) {
-  //     console.log(user.rows[0].username);
-  //   }
-  // });
+  queries
+    .findUserByUsername(req.body.username, req.body.password)
+    .then(user => {
+      console.log(user);
+      // if (user.rows.length > 0) {
+      //   console.log("this email is already in use");
+      //   res.status(400).send("this email is already in use");
+      // } else {
+      //   queries.createUser(req.body, res);
+      // }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(401).send("Something went wrong");
+    });
 });
 
 app.post("/signup/user", (req, res, next) => {
@@ -56,7 +65,7 @@ app.post("/signup/user", (req, res, next) => {
     .findUserByEmail(req.body.email)
     .then(user => {
       if (user.rows.length > 0) {
-        // console.log(res, "----res in sign up user");
+        console.log("this email is already in use");
         res.status(400).send("this email is already in use");
       } else {
         queries.createUser(req.body, res);
