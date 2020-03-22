@@ -52,10 +52,8 @@ app.post("/login/user", (req, res, next) => {
 });
 
 app.post("/signup/user", (req, res, next) => {
-  console.log(req.body, "----req");
-  console.log(res, "-----res");
   queries
-    .findUserByEmail(req, res)
+    .findUserByEmail(req.body.email)
     .then(user => {
       if (user.rows.length > 0) {
         // console.log(res, "----res in sign up user");

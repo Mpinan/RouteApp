@@ -60,37 +60,39 @@ const findUserByUsername = (username, password, response) => {
     });
 };
 
-const findUserByEmail = (req, response) => {
-  pool.query("SELECT * FROM users WHERE email = $1", [req.body.email]),
-    (error, results) => {
-      console.log("Hello");
-      if (error) {
-        throw error;
-      }
-      response.json(results.rows);
-    };
+const findUserByEmail = email => {
+  return new Promise((resolve, reject) => {
+    pool.query("SELECT * FROM users WHERE email = $1", [email]),
+      (error, results) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(results.rows);
+      };
+  });
 };
 
 const createUser = (request, response) => {
   const date_created = new Date();
   const { username, email, password } = request;
-
-  bcrypt.genSalt(saltRounds, function(err, salt) {
-    bcrypt.hash(password, salt, function(err, hash) {
-      pool.query(
-        `INSERT INTO users (username, email, password, date_created) VALUES ($1, $2, $3, $4 )`,
-        [username, email, hash, date_created],
-        (error, results) => {
-          // console.log("---------->", email);
-          if (error) {
-            throw error;
+  return new Promise((resolve, reject) => {
+    bcrypt.genSalt(saltRounds, function(err, salt) {
+      bcrypt.hash(password, salt, function(err, hash) {
+        pool.query(
+          `INSERT INTO users (username, email, password, date_created) VALUES ($1, $2, $3, $4 )`,
+          [username, email, hash, date_created],
+          (error, results) => {
+            // console.log("---------->", email);
+            if (error) {
+              reject(error);
+            }
+            response.json(results.rows);
           }
-          response.json(results.rows);
-        }
-      );
+        );
+      });
     });
+    resolve.status(201).send(`User added`);
   });
-  return response.status(201).send(`User added`);
 };
 
 const updateUser = (request, response) => {
