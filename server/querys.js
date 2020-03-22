@@ -75,24 +75,23 @@ const findUserByEmail = email => {
 const createUser = (request, response) => {
   const date_created = new Date();
   const { username, email, password } = request;
-  return new Promise((resolve, reject) => {
-    bcrypt.genSalt(saltRounds, function(err, salt) {
-      bcrypt.hash(password, salt, function(err, hash) {
-        pool.query(
-          `INSERT INTO users (username, email, password, date_created) VALUES ($1, $2, $3, $4 )`,
-          [username, email, hash, date_created],
-          (error, results) => {
-            // console.log("---------->", email);
-            if (error) {
-              reject(error);
-            }
-            response.json(results.rows);
+
+  bcrypt.genSalt(saltRounds, function(err, salt) {
+    bcrypt.hash(password, salt, function(err, hash) {
+      pool.query(
+        `INSERT INTO users (username, email, password, date_created) VALUES ($1, $2, $3, $4 )`,
+        [username, email, hash, date_created],
+        (error, results) => {
+          // console.log("---------->", email);
+          if (error) {
+            throw error;
           }
-        );
-      });
+          response.json(results.rows);
+        }
+      );
     });
-    resolve.status(201).send(`User added`);
   });
+  return response.status(201).send(`User added`);
 };
 
 const updateUser = (request, response) => {
