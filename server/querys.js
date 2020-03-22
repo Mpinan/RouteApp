@@ -61,15 +61,8 @@ const findUserByUsername = (username, password, response) => {
 };
 
 const findUserByEmail = email => {
-  return new Promise((resolve, reject) => {
-    pool.query("SELECT * FROM users WHERE email = $1", [email]),
-      (error, results) => {
-        if (error) {
-          reject(error);
-        }
-        resolve(results.rows);
-      };
-  });
+  // send just email instead
+  return pool.query("SELECT * FROM users WHERE email = $1", [email]);
 };
 
 const createUser = (request, response) => {
@@ -86,7 +79,6 @@ const createUser = (request, response) => {
           if (error) {
             throw error;
           }
-          response.json(results.rows);
         }
       );
     });
