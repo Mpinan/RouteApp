@@ -60,8 +60,15 @@ const findUserByUsername = (username, password, response) => {
     });
 };
 
-const findUserByEmail = req => {
-  return pool.query("SELECT * FROM users WHERE email = $1", [req.body.email]);
+const findUserByEmail = (req, response) => {
+  pool.query("SELECT * FROM users WHERE email = $1", [req.body.email]),
+    (error, results) => {
+      console.log("Hello");
+      if (error) {
+        throw error;
+      }
+      response.json(results.rows);
+    };
 };
 
 const createUser = (request, response) => {
@@ -78,6 +85,7 @@ const createUser = (request, response) => {
           if (error) {
             throw error;
           }
+          response.json(results.rows);
         }
       );
     });
