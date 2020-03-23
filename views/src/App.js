@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import SignUp from "./Components/Users/Signup";
 import Login from "./Components/Users/Login";
 import MainPage from "./Components/mainPage";
+import UserPage from "./Components/Users/UserPage";
 
 class App extends Component {
   state = {};
@@ -15,6 +16,7 @@ class App extends Component {
         <BrowserRouter>
           <Route path="/signup" component={SignUp} />
           <Route path="/login" component={Login} />
+          <Route path="/userPage" component={UserPage} />
         </BrowserRouter>
       </Container>
     );

@@ -8,7 +8,7 @@ class Login extends Component {
     username: "",
     password: "",
     errors: {},
-    login: false,
+    logged: false,
     session: []
   };
 
@@ -72,16 +72,16 @@ class Login extends Component {
     console.log(this.state);
   }
 
-  renderRedirect() {
+  renderRedirectAfterLogIn() {
     if (this.state.redirect) {
-      return <Redirect to="/" />;
+      return <Redirect to="/userPage" />;
     }
   }
 
   render() {
     return (
       <Form style={{ margin: "50px 0" }}>
-        {this.renderRedirect()}
+        {this.renderRedirectAfterLogIn()}
         <FormGroup row>
           <Label for="exampleEmail" sm={2} size="lg">
             Username
