@@ -1,4 +1,12 @@
 import React from "react";
+import {
+  InputGroup,
+  InputGroupAddon,
+  Button,
+  Input,
+  CustomInput,
+  Badge
+} from "reactstrap";
 import { compose, withProps } from "recompose";
 import {
   withScriptjs,
@@ -50,10 +58,38 @@ class UserPage extends React.PureComponent {
 
   render() {
     return (
-      <MyMapComponent
-        isMarkerShown={this.state.isMarkerShown}
-        onMarkerClick={this.handleMarkerClick}
-      />
+      <div>
+        <MyMapComponent
+          isMarkerShown={this.state.isMarkerShown}
+          onMarkerClick={this.handleMarkerClick}
+        />
+        <div style={{ margin: "50px 0" }}>
+          <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <h3>
+                <Badge>From</Badge>
+              </h3>
+            </InputGroupAddon>
+            <Input />
+          </InputGroup>
+          <InputGroup>
+            <Input />
+            <InputGroupAddon>
+              <h3>
+                <Badge>To</Badge>
+              </h3>
+            </InputGroupAddon>
+          </InputGroup>
+        </div>
+        <div>
+          <CustomInput
+            type="radio"
+            id="exampleCustomRadio"
+            name="customRadio"
+            label="Click to save this route"
+          />
+        </div>
+      </div>
     );
   }
 }
