@@ -1,2 +1,4 @@
 node_modules
 package-lock.json
+
+const apiKey = "AIzaSyBIGLbrD_tHjQZFi1GQ61wRi_ltzkJ8w3A";

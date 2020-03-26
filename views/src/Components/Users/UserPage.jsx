@@ -15,13 +15,13 @@ import {
   GoogleMap,
   Marker
 } from "react-google-maps";
+const apiKey = "AIzaSyBIGLbrD_tHjQZFi1GQ61wRi_ltzkJ8w3A";
 
-Geocode.setApiKey("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+Geocode.setApiKey(`${apiKey}`);
 
 const MyMapComponent = compose(
   withProps({
-    googleMapURL:
-      "https://maps.googleapis.com/maps/api/js?key=AIzaSyBIGLbrD_tHjQZFi1GQ61wRi_ltzkJ8w3A&callback=initMap",
+    googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`,
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `400px` }} />,
     mapElement: <div style={{ height: `100%` }} />
@@ -29,15 +29,25 @@ const MyMapComponent = compose(
   withScriptjs,
   withGoogleMap
 )(props => (
-  <GoogleMap defaultZoom={4} defaultCenter={{ lat: 40.4637, lng: 3.7492 }}>
+  <GoogleMap defaultZoom={4} defaultCenter={{ lat: 44.6523, lng: -4.7245 }}>
     {props.isMarkerShown && (
       <Marker
-        position={{ lat: 40.4637, lng: 3.7492 }}
+        position={{ lat: 41.6523, lng: -4.7245 }}
         onClick={props.onMarkerClick}
       />
     )}
   </GoogleMap>
 ));
+
+Geocode.fromAddress("Eiffel Tower").then(
+  response => {
+    const { lat, lng } = response.results[0].geometry.location;
+    console.log(lat, lng);
+  },
+  error => {
+    console.error(error, "----");
+  }
+);
 
 class UserPage extends React.PureComponent {
   state = {
@@ -53,7 +63,7 @@ class UserPage extends React.PureComponent {
   delayedShowMarker = () => {
     setTimeout(() => {
       this.setState({ isMarkerShown: true });
-    }, 3000);
+    });
   };
 
   handleMarkerClick = () => {
