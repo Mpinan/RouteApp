@@ -8,6 +8,7 @@ import {
   Badge
 } from "reactstrap";
 import { compose, withProps } from "recompose";
+import Geocode from "react-geocode";
 import {
   withScriptjs,
   withGoogleMap,
@@ -15,10 +16,12 @@ import {
   Marker
 } from "react-google-maps";
 
+Geocode.setApiKey("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+
 const MyMapComponent = compose(
   withProps({
     googleMapURL:
-      "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places",
+      "https://maps.googleapis.com/maps/api/js?key=AIzaSyBIGLbrD_tHjQZFi1GQ61wRi_ltzkJ8w3A&callback=initMap",
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `400px` }} />,
     mapElement: <div style={{ height: `100%` }} />
@@ -38,7 +41,9 @@ const MyMapComponent = compose(
 
 class UserPage extends React.PureComponent {
   state = {
-    isMarkerShown: false
+    isMarkerShown: false,
+    postCodeFrom: "",
+    postCodeTo: ""
   };
 
   componentDidMount() {
@@ -56,6 +61,18 @@ class UserPage extends React.PureComponent {
     this.delayedShowMarker();
   };
 
+  handlePostCodeFrom = event => {
+    this.setState({
+      postCodeFrom: event.target.value
+    });
+  };
+
+  handlePostCodeTo = event => {
+    this.setState({
+      postCodeTo: event.target.value
+    });
+  };
+
   render() {
     return (
       <div>
@@ -70,10 +87,10 @@ class UserPage extends React.PureComponent {
                 <Badge>From</Badge>
               </h3>
             </InputGroupAddon>
-            <Input />
+            <Input onChange={this.handlePostCodeFrom.bind(this)} />
           </InputGroup>
           <InputGroup>
-            <Input />
+            <Input onChange={this.handlePostCodeTo.bind(this)} />
             <InputGroupAddon>
               <h3>
                 <Badge>To</Badge>
