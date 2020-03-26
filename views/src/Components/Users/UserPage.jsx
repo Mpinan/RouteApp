@@ -2,7 +2,6 @@ import React from "react";
 import {
   InputGroup,
   InputGroupAddon,
-  Button,
   Input,
   CustomInput,
   Badge
@@ -26,10 +25,10 @@ const MyMapComponent = compose(
   withScriptjs,
   withGoogleMap
 )(props => (
-  <GoogleMap defaultZoom={8} defaultCenter={{ lat: -34.397, lng: 150.644 }}>
+  <GoogleMap defaultZoom={4} defaultCenter={{ lat: 40.4637, lng: 3.7492 }}>
     {props.isMarkerShown && (
       <Marker
-        position={{ lat: -34.397, lng: 150.644 }}
+        position={{ lat: 40.4637, lng: 3.7492 }}
         onClick={props.onMarkerClick}
       />
     )}
