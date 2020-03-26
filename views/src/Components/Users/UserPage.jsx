@@ -4,6 +4,7 @@ import {
   InputGroupAddon,
   Input,
   CustomInput,
+  Button,
   Badge
 } from "reactstrap";
 import { compose, withProps } from "recompose";
@@ -62,7 +63,7 @@ class UserPage extends React.PureComponent {
           isMarkerShown={this.state.isMarkerShown}
           onMarkerClick={this.handleMarkerClick}
         />
-        <div style={{ margin: "50px 0" }}>
+        <div style={{ marginTop: "5%", marginBottom: "2%" }}>
           <InputGroup>
             <InputGroupAddon addonType="prepend">
               <h3>
@@ -79,15 +80,17 @@ class UserPage extends React.PureComponent {
               </h3>
             </InputGroupAddon>
           </InputGroup>
-        </div>
-        <div>
+
           <CustomInput
             type="radio"
             id="exampleCustomRadio"
             name="customRadio"
             label="Click to save this route"
-          />
+          >
+            <Button style={{ marginLeft: "5%" }}>Route it!</Button>
+          </CustomInput>
         </div>
+        <div></div>
       </div>
     );
   }
