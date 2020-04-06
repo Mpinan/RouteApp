@@ -51,23 +51,26 @@ class SignUp extends Component {
   newUserAdd = e => {
     e.preventDefault();
     console.log(this.state, "----1");
-    fetch("http://localhost:3001/signup/user", {
+    fetch("http://localhost:3001/signup/users", {
       method: "post",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        username: this.state.username,
-        email: this.state.email,
-        confirm_email: this.state.confirm_email,
-        password: this.state.password
+        user: {
+          username: this.state.username,
+          email: this.state.email,
+          confirm_email: this.state.confirm_email,
+          password: this.state.password
+        }
       })
     })
       .then(response => response.json())
+      .then(data => {
+        console.log("Success:", data);
+      })
       .catch(err => {
-        if (err) {
-          console.log(err, "---hola");
-        }
+        console.error("Error:", err);
       })
       .then(this.setRedirect());
   };

@@ -1,6 +1,16 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const queries = require("./querys");
+const session = require("express-session");
+// const pgSession = require("connect-pg-simple")(session);
+// const Pool = require("pg").Pool;
+// const pool = new Pool({
+//   user: "postgres",
+//   host: "localhost",
+//   database: "todo",
+//   password: "Llatrese34",
+//   port: 5432
+// });
 const app = express();
 const port = 3001;
 const cors = require("cors"); // allows/disallows cross-site communication
@@ -10,6 +20,18 @@ app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
     extended: true
+  })
+);
+app.use(
+  session({
+    store,
+    name: "sid",
+    saveUninitialized: false,
+    secret: "sessionSecret",
+    resave: false,
+    cookie: {
+      sameSite: true
+    }
   })
 );
 
@@ -34,6 +56,7 @@ app.get("/", (request, response) => {
 //Routes
 
 app.get("/users", queries.getUsers);
+
 app.get("/user/:id", (req, res, next) => {
   console.log(req);
   queries.findUserByEmail(req.body.email).then(user => {
@@ -60,15 +83,16 @@ app.post("/login/user", (req, res, next) => {
     });
 });
 
-app.post("/signup/user", (req, res, next) => {
+app.post("/signup/users", (req, res, next) => {
   queries
-    .findUserByEmail(req.body.email)
+    .findUserByEmail(req.body.user.email)
     .then(user => {
+      console.log(user.rows);
       if (user.rows.length > 0) {
         console.log("this email is already in use");
         res.status(400).send("this email is already in use");
       } else {
-        queries.createUser(req.body, res);
+        queries.createUser(req.body.user, res);
       }
     })
     .catch(err => {
