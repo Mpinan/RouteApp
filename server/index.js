@@ -2,15 +2,15 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const queries = require("./querys");
 const session = require("express-session");
-// const pgSession = require("connect-pg-simple")(session);
-// const Pool = require("pg").Pool;
-// const pool = new Pool({
-//   user: "postgres",
-//   host: "localhost",
-//   database: "todo",
-//   password: "Llatrese34",
-//   port: 5432
-// });
+const pgSession = require("connect-pg-simple")(session);
+const Pool = require("pg").Pool;
+const pool = new Pool({
+  user: "postgres",
+  host: "localhost",
+  database: "todo",
+  password: "Llatrese34",
+  port: 5432
+});
 const app = express();
 const port = 3001;
 const cors = require("cors"); // allows/disallows cross-site communication
