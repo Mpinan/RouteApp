@@ -37,8 +37,8 @@ class Login extends Component {
       })
     })
       .then(response => response.json())
-      .catch(err => console.log(err))
-      .then(this.setRedirect());
+      .catch(err => console.log(err));
+    // .then(this.setRedirect());
   };
 
   handlePassword = event => {

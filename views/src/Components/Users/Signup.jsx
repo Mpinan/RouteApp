@@ -65,14 +65,14 @@ class SignUp extends Component {
         }
       })
     })
-      .then(response => response.json())
+      .then(response => console.log(response.json(), "hey"))
       .then(data => {
         console.log("Success:", data);
       })
       .catch(err => {
         console.error("Error:", err);
-      })
-      .then(this.setRedirect());
+      });
+    // .then(this.setRedirect());
   };
 
   setRedirect() {

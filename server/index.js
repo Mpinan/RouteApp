@@ -24,7 +24,6 @@ app.use(
 );
 app.use(
   session({
-    store,
     name: "sid",
     saveUninitialized: false,
     secret: "sessionSecret",
@@ -66,21 +65,7 @@ app.get("/user/:id", (req, res, next) => {
 
 app.post("/login/user", (req, res, next) => {
   console.log(req.body.password, "----------");
-  queries
-    .findUserByUsername(req.body.username, req.body.password)
-    .then(user => {
-      console.log(user);
-      // if (user.rows.length > 0) {
-      //   console.log("this email is already in use");
-      //   res.status(400).send("this email is already in use");
-      // } else {
-      //   queries.createUser(req.body, res);
-      // }
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(401).send("Something went wrong");
-    });
+  queries.findUserByUsername(req.body.username, req.body.password, res);
 });
 
 app.post("/signup/users", (req, res, next) => {
@@ -89,8 +74,7 @@ app.post("/signup/users", (req, res, next) => {
     .then(user => {
       console.log(user.rows);
       if (user.rows.length > 0) {
-        console.log("this email is already in use");
-        res.status(400).send("this email is already in use");
+        res.status(500).send("this email is already in use");
       } else {
         queries.createUser(req.body.user, res);
       }

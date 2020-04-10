@@ -30,26 +30,22 @@ const getUserById = (request, response) => {
   });
 };
 
-const findUserByUsername = (username, password) => {
+const findUserByUsername = (username, password, res) => {
   pool
     .query("SELECT * FROM users WHERE username = $1", [username])
     .then(user => {
       const hash = user.rows[0].password;
-      bcrypt
-        .compare(password, hash)
-        .then(results => {
-          console.log(results, "----results");
-          if (results) {
-            console.log("Login success");
-            return;
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      bcrypt.compare(password, hash).then(results => {
+        console.log(results, "----results");
+        if (results) {
+          return res.status(200).send("Login success");
+        } else {
+          return res.status(500).send("Wrong password");
+        }
+      });
     })
     .catch(err => {
-      console.log(err);
+      return res.status(500).send("Wrong user");
     });
 };
 
@@ -68,15 +64,15 @@ const createUser = (request, response) => {
         `INSERT INTO users (username, email, password, date_created) VALUES ($1, $2, $3, $4 )`,
         [username, email, hash, date_created],
         (error, results) => {
-          // console.log("---------->", email);
           if (error) {
-            throw error;
+            response.status(500).send("Username in use");
+          } else {
+            response.status(201).send(`User added`);
           }
         }
       );
     });
   });
-  return response.status(201).send(`User added`);
 };
 
 const updateUser = (request, response) => {
