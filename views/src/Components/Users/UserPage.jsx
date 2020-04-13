@@ -53,10 +53,12 @@ class UserPage extends React.PureComponent {
   state = {
     isMarkerShown: false,
     postCodeFrom: "",
-    postCodeTo: ""
+    postCodeTo: "",
+    currentUser: sessionStorage.getItem("username")
   };
 
   componentDidMount() {
+    console.log(this.state.currentUser);
     this.delayedShowMarker();
   }
 

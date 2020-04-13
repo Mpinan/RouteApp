@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const queries = require("./querys");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-
+const bcrypt = require("bcrypt");
 const Pool = require("pg").Pool;
 
 const app = express();
@@ -48,12 +48,31 @@ app.get("/user/:id", (req, res, next) => {
 });
 
 app.post("/login/user", (req, res, next) => {
-  queries.findUserByUsername(req.body.username, req.body.password, res);
-  jwt.sign({ user: req.body }, "secretKey", (err, token) => {
-    res.json({
-      token
+  const username = req.body.username;
+  const password = req.body.password;
+  queries
+    .findUserByUsername(username)
+    .then(user => {
+      const hash = user.rows[0].password;
+      bcrypt.compare(password, hash).then(results => {
+        if (results) {
+          jwt.sign({ user: req.body }, "secretKey",  (err, token) => {
+            res.json({
+              username,
+              token
+            });
+          }
+        }
+          );
+        
+        } else {
+          return res.status(401).send("Wrong password");
+        }
+      });
+    })
+    .catch(err => {
+      return res.status(401).send("Wrong user");
     });
-  });
 });
 
 app.post("/signup/users", (req, res, next) => {
@@ -62,7 +81,7 @@ app.post("/signup/users", (req, res, next) => {
     .then(user => {
       console.log(user.rows);
       if (user.rows.length > 0) {
-        res.status(500).send("this email is already in use");
+        res.status(401).send("this email is already in use");
       } else {
         queries.createUser(req.body.user, res);
       }

@@ -14,6 +14,29 @@ const MainPage = props => {
 
   const toggleNavbar = () => setCollapsed(!collapsed);
 
+  const logOut = () => {
+    sessionStorage.clear();
+  };
+
+  const handleButton = () => {
+    if (sessionStorage.getItem("username") === null) {
+      return (
+        <NavItem>
+          <NavLink href="/login">Log in</NavLink>
+          <NavLink href="/signup">Sign up</NavLink>
+        </NavItem>
+      );
+    } else {
+      return (
+        <NavItem>
+          <NavLink href="/logout" onClick={logOut}>
+            Log out
+          </NavLink>
+        </NavItem>
+      );
+    }
+  };
+
   return (
     <div>
       <Navbar color="faded" light>
@@ -27,14 +50,9 @@ const MainPage = props => {
               <NavLink href="/about">About us</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/contact">Contact me</NavLink>
+              <NavLink href="/contact">Contact us</NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink href="/login">Log in</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/signup">Sign Up</NavLink>
-            </NavItem>
+            <Nav navbar>{handleButton()}</Nav>
           </Nav>
         </Collapse>
       </Navbar>

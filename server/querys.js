@@ -30,22 +30,8 @@ const getUserById = (request, response) => {
   });
 };
 
-const findUserByUsername = (username, password, res) => {
-  pool
-    .query("SELECT * FROM users WHERE username = $1", [username])
-    .then(user => {
-      const hash = user.rows[0].password;
-      bcrypt.compare(password, hash).then(results => {
-        if (results) {
-          return res.status(200).send("Login success");
-        } else {
-          return res.status(500).send("Wrong password");
-        }
-      });
-    })
-    .catch(err => {
-      return res.status(500).send("Wrong user");
-    });
+const findUserByUsername = username => {
+  return pool.query("SELECT * FROM users WHERE username = $1", [username]);
 };
 
 const findUserByEmail = email => {
