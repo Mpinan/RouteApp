@@ -56,15 +56,12 @@ app.post("/login/user", (req, res, next) => {
       const hash = user.rows[0].password;
       bcrypt.compare(password, hash).then(results => {
         if (results) {
-          jwt.sign({ user: req.body }, "secretKey",  (err, token) => {
+          jwt.sign({ user: req.body }, "secretKey", (err, token) => {
             res.json({
               username,
               token
             });
-          }
-        }
-          );
-        
+          });
         } else {
           return res.status(401).send("Wrong password");
         }
