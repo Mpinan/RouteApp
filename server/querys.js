@@ -36,7 +36,6 @@ const findUserByUsername = (username, password, res) => {
     .then(user => {
       const hash = user.rows[0].password;
       bcrypt.compare(password, hash).then(results => {
-        console.log(results, "----results");
         if (results) {
           return res.status(200).send("Login success");
         } else {

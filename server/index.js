@@ -79,3 +79,15 @@ app.delete("/user/:id", queries.deleteUser);
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
 });
+
+verifyToken = (req, res, next) => {
+  const bearerHeader = req.headers["authorizaion"];
+  if (typeof bearerHeader !== "undefined") {
+    const bearer = bearerHeader.split(" ");
+    const bearerToken = bearer[1];
+    req.token = bearerToken;
+    next();
+  } else {
+    res.sendStatus(403);
+  }
+};
