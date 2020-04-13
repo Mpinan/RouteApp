@@ -7,6 +7,7 @@ class Login extends Component {
     redirect: false,
     username: "",
     password: "",
+    currentUserId: sessionStorage.getItem("userID"),
     errors: {}
   };
 
@@ -36,11 +37,13 @@ class Login extends Component {
     })
       .then(response => response.json())
       .then(data => this.saveSession(data))
+      .then(this.setRedirect())
       .catch(err => console.log(err, "hi i am an error"));
-    // .then(this.setRedirect());
   };
 
   saveSession = data => {
+    console.log(sessionStorage.getItem("userID"), data.userID);
+    sessionStorage.setItem("userID", data.userID);
     sessionStorage.setItem("session_key", data.token);
     sessionStorage.setItem("username", data.username);
   };
@@ -72,12 +75,12 @@ class Login extends Component {
     this.setState({
       redirect: true
     });
-    console.log(this.state);
+    console.log(sessionStorage.getItem("userID"));
   }
 
   renderRedirectAfterLogIn() {
     if (this.state.redirect) {
-      return <Redirect to="/userPage" />;
+      return <Redirect to={`/${this.state.currentUserId}`} />;
     }
   }
 

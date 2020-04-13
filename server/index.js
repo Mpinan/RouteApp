@@ -53,11 +53,13 @@ app.post("/login/user", (req, res, next) => {
   queries
     .findUserByUsername(username)
     .then(user => {
+      const userID = user.rows[0].uid;
       const hash = user.rows[0].password;
       bcrypt.compare(password, hash).then(results => {
         if (results) {
           jwt.sign({ user: req.body }, "secretKey", (err, token) => {
             res.json({
+              userID,
               username,
               token
             });
