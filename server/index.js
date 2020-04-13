@@ -1,36 +1,20 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const queries = require("./querys");
-const session = require("express-session");
-const pgSession = require("connect-pg-simple")(session);
+const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+
 const Pool = require("pg").Pool;
-const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "todo",
-  password: "Llatrese34",
-  port: 5432
-});
+
 const app = express();
 const port = 3001;
 const cors = require("cors"); // allows/disallows cross-site communication
 const helmet = require("helmet"); // creates headers that protect from attacks (security)
 
-app.use(bodyParser.json());
 app.use(
+  bodyParser.json(),
   bodyParser.urlencoded({
     extended: true
-  })
-);
-app.use(
-  session({
-    name: "sid",
-    saveUninitialized: false,
-    secret: "sessionSecret",
-    resave: false,
-    cookie: {
-      sameSite: true
-    }
   })
 );
 
@@ -64,8 +48,12 @@ app.get("/user/:id", (req, res, next) => {
 });
 
 app.post("/login/user", (req, res, next) => {
-  console.log(req.body.password, "----------");
   queries.findUserByUsername(req.body.username, req.body.password, res);
+  jwt.sign({ user: req.body }, "secretKey", (err, token) => {
+    res.json({
+      token
+    });
+  });
 });
 
 app.post("/signup/users", (req, res, next) => {
