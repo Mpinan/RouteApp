@@ -3,7 +3,7 @@ import { Container } from "reactstrap";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 import SignUp from "./Components/Users/Signup";
 import Login from "./Components/Users/Login";
-import MainPage from "./Components/homePage";
+import NavBar from "./Components/homePage";
 import UserPage from "./Components/Users/UserPage";
 import NotFound from "./Components/notFound";
 import Profile from "./Components/Users/profile";
@@ -14,7 +14,7 @@ class App extends Component {
   render() {
     return (
       <Container className="App">
-        <MainPage />
+        <NavBar />
         <BrowserRouter>
           <Route path="/signup" component={SignUp} />
           <Route path="/login" component={Login} />

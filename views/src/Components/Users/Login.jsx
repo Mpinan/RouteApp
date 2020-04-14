@@ -36,7 +36,7 @@ class Login extends Component {
     })
       .then(response => response.json())
       .then(data => this.saveSession(data))
-      .then(this.setRedirect())
+      .then(setTimeout(this.setRedirect(), 2000))
       .catch(err => console.log(err, "hi i am an error"));
   };
 
@@ -77,7 +77,7 @@ class Login extends Component {
 
   renderRedirectAfterLogIn() {
     if (this.state.redirect) {
-      return <Redirect to={`/profile/`} />;
+      return <Redirect to={`/home/`} />;
     }
   }
 

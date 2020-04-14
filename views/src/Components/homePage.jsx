@@ -9,7 +9,7 @@ import {
   NavLink
 } from "reactstrap";
 
-const MainPage = props => {
+const NavBar = props => {
   const [collapsed, setCollapsed] = useState(true);
 
   const toggleNavbar = () => setCollapsed(!collapsed);
@@ -60,4 +60,4 @@ const MainPage = props => {
   );
 };
 
-export default MainPage;
+export default NavBar;
