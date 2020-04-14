@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Col, Form, FormGroup, Label, Input } from "reactstrap";
+import { Button, Col, Form, FormGroup, Label, Input, Alert } from "reactstrap";
 import { Redirect } from "react-router-dom";
 
 class Login extends Component {
@@ -98,6 +98,7 @@ class Login extends Component {
               bsSize="lg"
               onChange={this.handleUsername.bind(this)}
             />
+            {this.state.errors && <Alert>{this.state.errors.username}</Alert>}
           </Col>
         </FormGroup>
         <FormGroup row>
@@ -112,6 +113,7 @@ class Login extends Component {
               placeholder="password"
               onChange={this.handlePassword.bind(this)}
             />
+            {this.state.errors && <Alert>{this.state.errors.password}</Alert>}
           </Col>
         </FormGroup>
         <Button

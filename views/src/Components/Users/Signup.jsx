@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Button, Form, FormGroup, Label, Input, Alert } from "reactstrap";
 import { Redirect } from "react-router-dom";
 
 // const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -36,7 +36,7 @@ class SignUp extends Component {
   handleLogin = e => {
     e.preventDefault();
     const errors = this.validate();
-    this.setState({ errors });
+    this.setState({ errors: errors || {} });
     if (errors) return;
     this.newUserAdd(e);
     // this.render();
@@ -46,6 +46,10 @@ class SignUp extends Component {
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
+  componentDidMount() {
+    console.log(this.state.errors === true);
+  }
 
   // Sends a post request to create a new user
   newUserAdd = e => {
@@ -73,7 +77,6 @@ class SignUp extends Component {
   };
 
   setRedirect() {
-    console.log("hello");
     this.setState({ redirect: true });
   }
 
@@ -96,6 +99,7 @@ class SignUp extends Component {
             onChange={this.onChange}
             value={this.state.username === null ? "" : this.state.username}
           />
+          {this.state.errors && <Alert>{this.state.errors.username}</Alert>}
         </FormGroup>
         <FormGroup>
           <Label for="email">Email</Label>
@@ -106,6 +110,7 @@ class SignUp extends Component {
             onChange={this.onChange}
             value={this.state.email === null ? "" : this.state.email}
           />
+          {this.state.errors && <Alert>{this.state.errors.email}</Alert>}
         </FormGroup>
         <FormGroup>
           <Label for="confirm">Confirm Email</Label>
@@ -118,6 +123,9 @@ class SignUp extends Component {
               this.state.confirm_email === null ? "" : this.state.confirm_email
             }
           />
+          {this.state.errors && (
+            <Alert>{this.state.errors.confirm_email}</Alert>
+          )}
         </FormGroup>
         <FormGroup>
           <Label for="password">Password</Label>
@@ -129,6 +137,7 @@ class SignUp extends Component {
             value={this.state.password === null ? "" : this.state.password}
             errors={this.state.errors}
           />
+          {this.state.errors && <Alert>{this.state.errors.password}</Alert>}
         </FormGroup>
 
         <Button color="secondary" size="lg" block>
