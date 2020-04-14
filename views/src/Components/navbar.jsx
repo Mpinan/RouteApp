@@ -29,6 +29,9 @@ const NavBar = props => {
     } else {
       return (
         <NavItem>
+          <NavItem>
+            <NavLink href="/profile">Profile</NavLink>
+          </NavItem>
           <NavLink href="/logout" onClick={logOut}>
             Log out
           </NavLink>
@@ -52,6 +55,10 @@ const NavBar = props => {
             <NavItem>
               <NavLink href="/contact">Contact us</NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink href="/userpage">Routing</NavLink>
+            </NavItem>
+
             <Nav navbar>{handleButton()}</Nav>
           </Nav>
         </Collapse>
