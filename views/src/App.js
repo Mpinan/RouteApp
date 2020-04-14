@@ -3,9 +3,10 @@ import { Container } from "reactstrap";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 import SignUp from "./Components/Users/Signup";
 import Login from "./Components/Users/Login";
-import MainPage from "./Components/mainPage";
+import MainPage from "./Components/homePage";
 import UserPage from "./Components/Users/UserPage";
 import NotFound from "./Components/notFound";
+import Profile from "./Components/Users/profile";
 
 class App extends Component {
   state = {};
@@ -18,7 +19,8 @@ class App extends Component {
           <Route path="/signup" component={SignUp} />
           <Route path="/login" component={Login} />
           <Route path="/userPage" component={UserPage} />
-          <Route path="/not-found" component={NotFound}></Route>
+          <Route path="/not-found" component={NotFound} />
+          <Route path="/profile" component={Profile} />
         </BrowserRouter>
         {/* <Redirect to="/not-found" /> */}
       </Container>
