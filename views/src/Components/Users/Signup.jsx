@@ -65,14 +65,11 @@ class SignUp extends Component {
         }
       })
     })
-      .then(response => console.log(response.json(), "hey"))
-      .then(data => {
-        console.log("Success:", data);
-      })
+      .then(response => response.json())
+      .then(this.setRedirect())
       .catch(err => {
         console.error("Error:", err);
       });
-    // .then(this.setRedirect());
   };
 
   setRedirect() {
@@ -82,7 +79,7 @@ class SignUp extends Component {
 
   renderRedirect() {
     if (this.state.redirect) {
-      return <Redirect to="/" />;
+      return <Redirect to="/login" />;
     }
   }
 

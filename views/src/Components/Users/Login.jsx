@@ -77,7 +77,7 @@ class Login extends Component {
 
   renderRedirectAfterLogIn() {
     if (this.state.redirect) {
-      return <Redirect to={`/profile`} />;
+      return <Redirect to={`/profile/`} />;
     }
   }
 
