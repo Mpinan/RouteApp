@@ -5,93 +5,30 @@ import {
   Input,
   CustomInput,
   Button,
-  Badge
+  Badge,
+  Container
 } from "reactstrap";
-import { compose, withProps } from "recompose";
-import Geocode from "react-geocode";
-import {
-  withScriptjs,
-  withGoogleMap,
-  GoogleMap,
-  Marker
-} from "react-google-maps";
+
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 const apiKey = "AIzaSyBIGLbrD_tHjQZFi1GQ61wRi_ltzkJ8w3A";
 
-Geocode.setApiKey(`${apiKey}`);
-
-const MyMapComponent = compose(
-  withProps({
-    googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`,
-    loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `400px` }} />,
-    mapElement: <div style={{ height: `100%` }} />
-  }),
-  withScriptjs,
-  withGoogleMap
-)(props => (
-  <GoogleMap defaultZoom={4} defaultCenter={{ lat: 44.6523, lng: -4.7245 }}>
-    {props.isMarkerShown && (
-      <Marker
-        position={{ lat: 41.6523, lng: -4.7245 }}
-        onClick={props.onMarkerClick}
-      />
-    )}
-  </GoogleMap>
-));
-
-Geocode.fromAddress("Eiffel Tower").then(
-  response => {
-    const { lat, lng } = response.results[0].geometry.location;
-    console.log(lat, lng);
-  },
-  error => {
-    console.error(error, "----");
-  }
-);
-
-class UserPage extends React.PureComponent {
-  state = {
-    isMarkerShown: false,
-    postCodeFrom: "",
-    postCodeTo: "",
-    currentUser: sessionStorage.getItem("username")
-  };
-
-  componentDidMount() {
-    console.log(this.state.currentUser);
-    this.delayedShowMarker();
-  }
-
-  delayedShowMarker = () => {
-    setTimeout(() => {
-      this.setState({ isMarkerShown: true });
-    });
-  };
-
-  handleMarkerClick = () => {
-    this.setState({ isMarkerShown: false });
-    this.delayedShowMarker();
-  };
-
-  handlePostCodeFrom = event => {
-    this.setState({
-      postCodeFrom: event.target.value
-    });
-  };
-
-  handlePostCodeTo = event => {
-    this.setState({
-      postCodeTo: event.target.value
-    });
-  };
-
+export class MapContainer extends React.Component {
   render() {
+    const style = {
+      width: "62.40%",
+      height: "62.5%"
+    };
     return (
-      <div>
-        <MyMapComponent
-          isMarkerShown={this.state.isMarkerShown}
-          onMarkerClick={this.handleMarkerClick}
-        />
+      <div className="container-fluid border-bottom">
+        <div className="map">
+          <Map google={this.props.google} zoom={14} style={style}>
+            <Marker onClick={this.onMarkerClick} name={"Current location"} />
+
+            <InfoWindow onClose={this.onInfoWindowClose}>
+              <div>{/* <h1>{this.state.selectedPlace.name}</h1> */}</div>
+            </InfoWindow>
+          </Map>
+        </div>
         <div style={{ marginTop: "5%", marginBottom: "2%" }}>
           <InputGroup>
             <InputGroupAddon addonType="prepend">
@@ -99,10 +36,10 @@ class UserPage extends React.PureComponent {
                 <Badge>From</Badge>
               </h3>
             </InputGroupAddon>
-            <Input onChange={this.handlePostCodeFrom.bind(this)} />
+            <Input />
           </InputGroup>
           <InputGroup>
-            <Input onChange={this.handlePostCodeTo.bind(this)} />
+            <Input />
             <InputGroupAddon>
               <h3>
                 <Badge>To</Badge>
@@ -119,10 +56,21 @@ class UserPage extends React.PureComponent {
             <Button style={{ marginLeft: "5%" }}>Route it!</Button>
           </CustomInput>
         </div>
-        <div></div>
       </div>
     );
   }
 }
 
-export default UserPage;
+export default GoogleApiWrapper({
+  apiKey: apiKey
+})(MapContainer);
+
+MapContainer.defaultProps = {
+  zoom: 16,
+  initialCenter: {
+    lat: 51.5178767,
+    lng: -0.0762007
+  },
+  centerAroundCurrentLocation: true,
+  visible: true
+};
