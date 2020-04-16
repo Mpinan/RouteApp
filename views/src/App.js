@@ -16,7 +16,7 @@ import Profile from "./Components/Users/profile";
 class App extends Component {
   render() {
     return (
-      <Container className="App">
+      <div className="App">
         <NavBar />
         <BrowserRouter>
           <Switch>
@@ -31,7 +31,7 @@ class App extends Component {
             <Redirect exact path="/" exact to="/home" />
           </Switch>
         </BrowserRouter>
-      </Container>
+      </div>
     );
   }
 }

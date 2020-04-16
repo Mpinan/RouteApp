@@ -13,7 +13,13 @@ code {
 }
 
 #map {
-  width: 80%;
+  width: 100%;
   height: 80%;
   position: absolute;
+  padding: 0%;
 }
+/* #mapInside {
+  width: 100%;
+  height: 60%;
+  position: absolute;
+} */
