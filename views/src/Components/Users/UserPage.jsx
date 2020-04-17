@@ -1,12 +1,4 @@
 import React from "react";
-import {
-  InputGroup,
-  InputGroupAddon,
-  CustomInput,
-  Button,
-  Badge,
-  Container
-} from "reactstrap";
 import InputRoute from "../input";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 const apiKey = "AIzaSyBIGLbrD_tHjQZFi1GQ61wRi_ltzkJ8w3A";
@@ -14,6 +6,19 @@ const apiKey = "AIzaSyBIGLbrD_tHjQZFi1GQ61wRi_ltzkJ8w3A";
 export class MapContainer extends React.Component {
   onMarkerClick() {
     console.log("hello");
+  }
+
+  getCoordsPostcode = () => {
+    fetch(`api.postcodes.io/postcodes/SL09BY`)
+      .then(response => {
+        return response.json();
+      })
+      .then(result => console.log(result, "----"))
+      .catch(err => console.log(err));
+  };
+
+  componentDidMount() {
+    this.getCoordsPostcode();
   }
 
   calculateDistance() {
