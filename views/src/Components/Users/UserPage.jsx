@@ -1,20 +1,29 @@
 import React from "react";
 import InputRoute from "../input";
+
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 const apiKey = "AIzaSyBIGLbrD_tHjQZFi1GQ61wRi_ltzkJ8w3A";
 
 export class MapContainer extends React.Component {
+  state = {
+    origins: {
+      lat: 51.515103,
+      lng: -0.508119,
+    },
+    destinations: { lat: 51.510907, lng: -0.590733 },
+  };
+
   onMarkerClick() {
     console.log("hello");
   }
 
   getCoordsPostcode = () => {
-    fetch(`api.postcodes.io/postcodes/SL09BY`)
-      .then(response => {
+    fetch(`https://api.postcodes.io/postcodes/SL09BY`)
+      .then((response) => {
         return response.json();
       })
-      .then(result => console.log(result, "----"))
-      .catch(err => console.log(err));
+      .then((result) => console.log(result, "----"))
+      .catch((err) => console.log(err, "errorrrr"));
   };
 
   componentDidMount() {
@@ -23,12 +32,14 @@ export class MapContainer extends React.Component {
 
   calculateDistance() {
     const { google } = this.props;
+    const { origins, destinations } = this.state;
     const service = new google.maps.DistanceMatrixService();
+
     service.getDistanceMatrix(
       {
-        origins: [{ lat: 55.93, lng: -3.118 }],
-        destinations: [{ lat: 50.087, lng: 14.421 }],
-        travelMode: "DRIVING"
+        origins: [origins],
+        destinations: [destinations],
+        travelMode: "WALKING",
       },
       (response, status) => {
         console.log("response", response);
@@ -49,12 +60,10 @@ export class MapContainer extends React.Component {
           <div id="map">
             <Map
               google={google}
-              // initialCenter={{
-              //   lat: Number(latitude),
-              //   lng: Number(longitude)
-              // }}
+              initialCenter={this.state.origins}
               onClick={this.mapClicked}
-              zoom={14}
+              zoom={12}
+              centerAroundCurrentLocation={true}
             >
               {/* {posts.lenght
                   ? posts.map(post => {
@@ -93,15 +102,5 @@ export class MapContainer extends React.Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: apiKey
+  apiKey: apiKey,
 })(MapContainer);
-
-MapContainer.defaultProps = {
-  zoom: 16,
-  initialCenter: {
-    lat: 51.5178767,
-    lng: -0.0762007
-  },
-  centerAroundCurrentLocation: true,
-  visible: true
-};
