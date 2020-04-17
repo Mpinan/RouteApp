@@ -6,10 +6,10 @@ import {
   CustomInput,
   Button,
   Badge,
-  Container
+  Container,
 } from "reactstrap";
 
-const InputRoute = () => {
+const InputRoute = (onChangeOrigin, onChangeDestination) => {
   return (
     <Container>
       <div style={{ margin: "40px" }}>
@@ -19,10 +19,10 @@ const InputRoute = () => {
               <Badge>From</Badge>
             </h3>
           </InputGroupAddon>
-          <Input />
+          <Input onChange={onChangeOrigin} />
         </InputGroup>
         <InputGroup>
-          <Input />
+          <Input onChange={onChangeDestination} />
           <InputGroupAddon>
             <h3>
               <Badge>To</Badge>
