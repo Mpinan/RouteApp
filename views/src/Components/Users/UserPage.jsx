@@ -17,23 +17,17 @@ const apiKey = "AIzaSyDro0XKEZYd8mj42cXWVukmO0WKJstaAYs&callback=";
 
 export class MapContainer extends React.Component {
   state = {
-    infoPostcode: "",
     postcode: "",
-    origins: {
-      lat: 51.515103,
-      lng: -0.508119,
-    },
-    destinations: { lat: 51.510907, lng: -0.590733 },
     route: [],
   };
 
   handleCoords = (longitude, latitude) => {
-    let origins = {
+    let postCodeCoords = {
       lat: latitude,
       lng: longitude,
     };
 
-    this.state.route.push(origins);
+    this.state.route.push(postCodeCoords);
     console.log(this.state.route);
   };
 
@@ -43,10 +37,6 @@ export class MapContainer extends React.Component {
     });
     this.getCoordsPostcode(event.target.value);
   };
-
-  onMarkerClick() {
-    console.log("hello");
-  }
 
   getCoordsPostcode = (postcode) => {
     fetch(`https://api.postcodes.io/postcodes/${postcode}`)
@@ -59,9 +49,22 @@ export class MapContainer extends React.Component {
       .catch((err) => console.log(err, "errorrrr"));
   };
 
-  calculateDistance() {
-    const { google } = this.props;
+  calculateRoute() {
     const { route } = this.state;
+
+    let origin = route[0];
+    let destination = route[1];
+
+    this.displayRouteService(origin, destination);
+    this.calculateDistance(origin, destination);
+    this.state.route = [];
+  }
+
+  // route calculate response
+  displayRouteService(origin, destination) {
+    const { google } = this.props;
+    const displayRouteService = new google.maps.DirectionsService();
+    const displayUpdatedMap = new google.maps.DirectionsRenderer();
     let map = new google.maps.Map(document.getElementById("map"), {
       zoom: 12,
       center: {
@@ -69,14 +72,6 @@ export class MapContainer extends React.Component {
         lng: -0.508119,
       },
     });
-
-    const displayRouteService = new google.maps.DirectionsService();
-    const service = new google.maps.DistanceMatrixService();
-    const displayUpdatedMap = new google.maps.DirectionsRenderer();
-    let origin = route[0];
-    let destination = route[1];
-    displayUpdatedMap.setMap(map);
-    // route calculate response
     displayRouteService.route(
       {
         origin: origin,
@@ -92,8 +87,13 @@ export class MapContainer extends React.Component {
         console.log("status", status);
       }
     );
+    displayUpdatedMap.setMap(map);
+  }
 
-    //more detailed calculated response
+  //more detailed calculated response
+  calculateDistance(origin, destination) {
+    const { google } = this.props;
+    const service = new google.maps.DistanceMatrixService();
     service.getDistanceMatrix(
       {
         origins: [origin],
@@ -105,11 +105,10 @@ export class MapContainer extends React.Component {
         console.log("status", status);
       }
     );
-    this.state.route = [];
   }
 
   render() {
-    const { posts, latitude, longitude, google } = this.props;
+    const { google } = this.props;
 
     return (
       <div>
@@ -139,9 +138,7 @@ export class MapContainer extends React.Component {
                 name="customRadio"
                 label="Click to save this route"
               >
-                <Button onClick={() => this.calculateDistance()}>
-                  Route it
-                </Button>
+                <Button onClick={() => this.calculateRoute()}>Route it</Button>
               </CustomInput>
             </div>
           </Container>
