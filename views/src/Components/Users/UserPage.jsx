@@ -11,56 +11,66 @@ import {
 } from "reactstrap";
 
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
+import { Route } from "react-router-dom";
 const apiKey = "AIzaSyBIGLbrD_tHjQZFi1GQ61wRi_ltzkJ8w3A";
 
 export class MapContainer extends React.Component {
   state = {
+    infoPostcode: "",
     postcode: "",
     origins: {
       lat: 51.515103,
       lng: -0.508119,
     },
     destinations: { lat: 51.510907, lng: -0.590733 },
+    route: [],
   };
 
-  handleOrigin = (event) => {
-    this.setState({
-      origin: event.target.value,
-    });
+  handleCoords = (longitude, latitude) => {
+    let origins = {
+      lat: latitude,
+      lng: longitude,
+    };
+
+    this.state.route.push(origins);
+    console.log(this.state.route);
   };
 
-  handleDestination = (event) => {
+  handlePostcode = (event) => {
     this.setState({
-      destination: event.target.value,
+      postcode: event.target.value,
     });
+    this.getCoordsPostcode(event.target.value);
   };
 
   onMarkerClick() {
     console.log("hello");
   }
 
-  getCoordsPostcode = () => {
-    fetch(`https://api.postcodes.io/postcodes/SL09BY`)
+  getCoordsPostcode = (postcode) => {
+    fetch(`https://api.postcodes.io/postcodes/${postcode}`)
       .then((response) => {
         return response.json();
       })
-      .then((result) => console.log(result, "----"))
+      .then((result) =>
+        this.handleCoords(result.result.longitude, result.result.latitude)
+      )
       .catch((err) => console.log(err, "errorrrr"));
   };
 
-  componentDidMount() {
-    this.getCoordsPostcode();
-  }
-
   calculateDistance() {
     const { google } = this.props;
-    const { origins, destinations } = this.state;
+    console.log(google);
+    const { route, origins, destinations } = this.state;
+
+    let origin = route[0];
+    let destination = route[1];
     const service = new google.maps.DistanceMatrixService();
 
     service.getDistanceMatrix(
       {
-        origins: [origins],
-        destinations: [destinations],
+        origins: [origin],
+        destinations: [destination],
         travelMode: "WALKING",
       },
       (response, status) => {
@@ -84,10 +94,10 @@ export class MapContainer extends React.Component {
                     <Badge>From</Badge>
                   </h3>
                 </InputGroupAddon>
-                <Input onChange={this.handleOrigin.bind(this)} />
+                <Input onChange={this.handlePostcode.bind(this)} />
               </InputGroup>
               <InputGroup>
-                <Input onChange={this.handleDestination.bind(this)} />
+                <Input onChange={this.handlePostcode.bind(this)} />
                 <InputGroupAddon>
                   <h3>
                     <Badge>To</Badge>
@@ -101,7 +111,7 @@ export class MapContainer extends React.Component {
                 name="customRadio"
                 label="Click to save this route"
               >
-                <Button style={{ marginLeft: "5%" }}>Route it!</Button>
+                <Button onClick={this.calculateDistance()}>rOUTE IT</Button>
               </CustomInput>
             </div>
           </Container>
