@@ -13,7 +13,7 @@ import {
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import { Route } from "react-router-dom";
 
-const apiKey = "AIzaSyBIGLbrD_tHjQZFi1GQ61wRi_ltzkJ8w3A";
+const apiKey = "AIzaSyDro0XKEZYd8mj42cXWVukmO0WKJstaAYs&callback=";
 
 export class MapContainer extends React.Component {
   state = {
@@ -59,28 +59,36 @@ export class MapContainer extends React.Component {
       .catch((err) => console.log(err, "errorrrr"));
   };
 
-  calculate() {
-    console.log(this.state.route);
-    // this.calculateDistance(this.state.route);
-  }
-
   calculateDistance() {
     const { google } = this.props;
     const { route } = this.state;
+    let map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 12,
+      center: {
+        lat: 51.515103,
+        lng: -0.508119,
+      },
+    });
 
-    const service = new google.maps.DistanceMatrixService();
+    const service = new google.maps.DirectionsService();
+    const display = new google.maps.DirectionsRenderer();
     let origin = route[0];
     let destination = route[1];
-    console.log(origin);
+    display.setMap(map);
 
-    service.getDistanceMatrix(
+    service.route(
       {
-        origins: [origin],
-        destinations: [destination],
+        origin: origin,
+        destination: destination,
         travelMode: "WALKING",
       },
       (response, status) => {
-        console.log("response", response);
+        console.log(
+          "response",
+          response,
+          display.setDirections(response)
+          // directionsDisplay.setMap(map)
+        );
         console.log("status", status);
       }
     );
