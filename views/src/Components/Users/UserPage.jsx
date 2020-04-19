@@ -12,6 +12,7 @@ import {
 
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import { Route } from "react-router-dom";
+
 const apiKey = "AIzaSyBIGLbrD_tHjQZFi1GQ61wRi_ltzkJ8w3A";
 
 export class MapContainer extends React.Component {
@@ -58,14 +59,19 @@ export class MapContainer extends React.Component {
       .catch((err) => console.log(err, "errorrrr"));
   };
 
+  calculate() {
+    console.log(this.state.route);
+    // this.calculateDistance(this.state.route);
+  }
+
   calculateDistance() {
     const { google } = this.props;
-    console.log(google);
-    const { route, origins, destinations } = this.state;
+    const { route } = this.state;
 
+    const service = new google.maps.DistanceMatrixService();
     let origin = route[0];
     let destination = route[1];
-    const service = new google.maps.DistanceMatrixService();
+    console.log(origin);
 
     service.getDistanceMatrix(
       {
@@ -78,6 +84,8 @@ export class MapContainer extends React.Component {
         console.log("status", status);
       }
     );
+
+    this.state.route = [];
   }
 
   render() {
@@ -111,7 +119,9 @@ export class MapContainer extends React.Component {
                 name="customRadio"
                 label="Click to save this route"
               >
-                <Button onClick={this.calculateDistance()}>rOUTE IT</Button>
+                <Button onClick={() => this.calculateDistance()}>
+                  Route it
+                </Button>
               </CustomInput>
             </div>
           </Container>
