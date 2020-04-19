@@ -70,13 +70,14 @@ export class MapContainer extends React.Component {
       },
     });
 
-    const service = new google.maps.DirectionsService();
-    const display = new google.maps.DirectionsRenderer();
+    const displayRouteService = new google.maps.DirectionsService();
+    const service = new google.maps.DistanceMatrixService();
+    const displayUpdatedMap = new google.maps.DirectionsRenderer();
     let origin = route[0];
     let destination = route[1];
-    display.setMap(map);
-
-    service.route(
+    displayUpdatedMap.setMap(map);
+    // route calculate response
+    displayRouteService.route(
       {
         origin: origin,
         destination: destination,
@@ -86,13 +87,24 @@ export class MapContainer extends React.Component {
         console.log(
           "response",
           response,
-          display.setDirections(response)
-          // directionsDisplay.setMap(map)
+          displayUpdatedMap.setDirections(response)
         );
         console.log("status", status);
       }
     );
 
+    //more detailed calculated response
+    service.getDistanceMatrix(
+      {
+        origins: [origin],
+        destinations: [destination],
+        travelMode: "WALKING",
+      },
+      (response, status) => {
+        console.log("response", response);
+        console.log("status", status);
+      }
+    );
     this.state.route = [];
   }
 
