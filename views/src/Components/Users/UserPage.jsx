@@ -11,9 +11,9 @@ import {
 } from "reactstrap";
 
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
-import { Route } from "react-router-dom";
 
 const apiKey = "AIzaSyDro0XKEZYd8mj42cXWVukmO0WKJstaAYs&callback=";
+const apiKey2 = "AIzaSyBIGLbrD_tHjQZFi1GQ61wRi_ltzkJ8w3A";
 
 export class MapContainer extends React.Component {
   state = {
