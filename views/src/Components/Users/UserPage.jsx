@@ -1,5 +1,5 @@
 import React from "react";
-// import InputRoute from "../input";
+import Routes from "../routes";
 import {
   InputGroup,
   Input,
@@ -142,6 +142,7 @@ export class MapContainer extends React.Component {
               </CustomInput>
             </div>
           </Container>
+          <Routes />
         </div>
         <div className="container-fluid border-bottom" id="map">
           <div id="map">
