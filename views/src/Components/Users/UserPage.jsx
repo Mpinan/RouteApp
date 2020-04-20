@@ -19,6 +19,7 @@ export class MapContainer extends React.Component {
   state = {
     postcode: "",
     route: [],
+    selectRoute: this.displayRouteService.bind(this),
   };
 
   handleCoords = (longitude, latitude) => {
@@ -142,7 +143,7 @@ export class MapContainer extends React.Component {
               </CustomInput>
             </div>
           </Container>
-          <Routes />
+          <Routes selectRoute={this.state.selectRoute} />
         </div>
         <div className="container-fluid border-bottom" id="map">
           <div id="map">
@@ -153,10 +154,7 @@ export class MapContainer extends React.Component {
               zoom={12}
               centerAroundCurrentLocation={true}
             >
-              <InfoWindow
-              // marker={this.state.activeMarker}
-              // visible={this.state.showingInfoWindow}
-              >
+              <InfoWindow>
                 <div className="marker">
                   <a href=""></a>
                 </div>

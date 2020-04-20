@@ -4,10 +4,6 @@ import { Container, FormGroup, Label, Input } from "reactstrap";
 class Route extends Component {
   state = {};
 
-  handleOption(route) {
-    console.log(route);
-  }
-
   render() {
     let routes = [
       {
@@ -52,7 +48,14 @@ class Route extends Component {
           >
             {routes.map((route) => {
               return (
-                <option onDoubleClick={() => this.handleOption(route.journey)}>
+                <option
+                  onDoubleClick={() =>
+                    this.props.selectRoute(
+                      route.journey.origin,
+                      route.journey.destination
+                    )
+                  }
+                >
                   {route.name}
                 </option>
               );
