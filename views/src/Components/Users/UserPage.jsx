@@ -57,7 +57,6 @@ export class MapContainer extends React.Component {
     let destination = route[1];
 
     this.displayRouteService(origin, destination);
-    this.calculateDistance(origin, destination);
     this.state.route = [];
   }
 
@@ -89,23 +88,6 @@ export class MapContainer extends React.Component {
       }
     );
     displayUpdatedMap.setMap(map);
-  }
-
-  //more detailed calculated response
-  calculateDistance(origin, destination) {
-    const { google } = this.props;
-    const service = new google.maps.DistanceMatrixService();
-    service.getDistanceMatrix(
-      {
-        origins: [origin],
-        destinations: [destination],
-        travelMode: "WALKING",
-      },
-      (response, status) => {
-        console.log("response", response);
-        console.log("status", status);
-      }
-    );
   }
 
   render() {

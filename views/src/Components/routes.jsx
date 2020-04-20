@@ -19,6 +19,7 @@ class Route extends Component {
             lng: -1.508119,
           },
         },
+        method: "WALKING",
       },
       {
         id: 1,
@@ -30,9 +31,10 @@ class Route extends Component {
           },
           destination: {
             lat: 50.515103,
-            lng: -0.508119,
+            lng: -2.508119,
           },
         },
+        method: "WALKING",
       },
     ];
 
