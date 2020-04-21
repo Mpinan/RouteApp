@@ -1,5 +1,6 @@
 import React from "react";
 import Routes from "../routes";
+import RouteForm from "../input";
 import {
   InputGroup,
   Input,
@@ -125,6 +126,7 @@ export class MapContainer extends React.Component {
               </CustomInput>
             </div>
           </Container>
+          <RouteForm />
           <Routes selectRoute={this.state.selectRoute} />
         </div>
         <div className="container-fluid border-bottom" id="map">
