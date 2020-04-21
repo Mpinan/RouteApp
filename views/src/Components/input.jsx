@@ -4,7 +4,38 @@ import { Row, Col, FormGroup, Fade, Input, Button, Badge } from "reactstrap";
 class RouteForm extends Component {
   state = {
     fadeIn: false,
+    name: "walk",
+    method: "walking",
+    journey: {
+      origin: {
+        lat: 51.515103,
+        lng: -0.508119,
+      },
+      destination: {
+        lat: 51.515103,
+        lng: -1.508119,
+      },
+    },
+    route: [],
   };
+
+  saveRoute() {
+    let name = "work";
+    let method = "walking";
+    let journey = {
+      origin: {
+        lat: 51.515103,
+        lng: -0.508119,
+      },
+      destination: {
+        lat: 51.515103,
+        lng: -1.508119,
+      },
+    };
+    let route = [];
+    route.push(name, method, journey);
+    console.log(route);
+  }
 
   handleFadeIn() {
     this.setState({ fadeIn: !this.state.fadeIn });
@@ -23,7 +54,7 @@ class RouteForm extends Component {
         <Row form>
           <Col md={6}>
             <FormGroup>
-              <Badge for="exampleEmail">FROM</Badge>
+              <Badge color="success">FROM</Badge>
               <Input
                 onChange={this.handlePostcode.bind(this)}
                 placeholder="Place origin POSTCODE"
@@ -32,7 +63,7 @@ class RouteForm extends Component {
           </Col>
           <Col md={6}>
             <FormGroup>
-              <Badge for="examplePassword">TO</Badge>
+              <Badge color="success">TO</Badge>
               <Input
                 onChange={this.handlePostcode.bind(this)}
                 placeholder="Place destination POSTCODE"
@@ -40,23 +71,25 @@ class RouteForm extends Component {
             </FormGroup>
           </Col>
         </Row>
-        <Button onClick={this.props.calculateRoute}>Route it</Button>
-        <Button color="primary" onClick={() => this.handleFadeIn()}>
+        <Button color="success" onClick={() => this.handleFadeIn()}>
           Save route
         </Button>
         <Fade in={this.state.fadeIn} tag="h5" className="mt-3">
-          <div className={this.state.display}>
-            <FormGroup className="d-block">
-              <Badge for="exampleAddress">NAME OF THE ROUTE</Badge>
+          <div>
+            <FormGroup>
+              <Badge color="success">NAME OF THE ROUTE</Badge>
               <Input placeholder="Work, Home, Shop..." />
             </FormGroup>
             <FormGroup>
-              <Badge for="exampleAddress2">METHOD</Badge>
+              <Badge color="success">METHOD</Badge>
               <Input placeholder="WALKING or DRIVING" />
             </FormGroup>
-            <Button>Confirm</Button>
+            <Input onClick={this.saveRoute} type="checkbox" /> Save it
           </div>
         </Fade>
+        <Button color="success" onClick={this.props.calculateRoute}>
+          Route it
+        </Button>
       </div>
     );
   }

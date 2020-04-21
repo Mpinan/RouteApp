@@ -33,6 +33,7 @@ class Route extends Component {
           },
         },
         method: "WALKING",
+        uid: sessionStorage.getItem("userID"),
       },
     ];
 
