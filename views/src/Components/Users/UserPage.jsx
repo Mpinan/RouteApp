@@ -2,13 +2,13 @@ import React from "react";
 import Routes from "../routes";
 import RouteForm from "../input";
 import {
-  InputGroup,
   Input,
-  InputGroupAddon,
-  CustomInput,
+  FormGroup,
   Button,
   Badge,
   Container,
+  Row,
+  Col,
 } from "reactstrap";
 
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
@@ -21,6 +21,7 @@ export class MapContainer extends React.Component {
     postcode: "",
     route: [],
     selectRoute: this.displayRouteService.bind(this),
+    calculateRoute: this.calculateRoute.bind(this),
   };
 
   handleCoords = (longitude, latitude) => {
@@ -31,13 +32,6 @@ export class MapContainer extends React.Component {
 
     this.state.route.push(postCodeCoords);
     console.log(this.state.route);
-  };
-
-  handlePostcode = (event) => {
-    this.setState({
-      postcode: event.target.value,
-    });
-    this.getCoordsPostcode(event.target.value);
   };
 
   getCoordsPostcode = (postcode) => {
@@ -99,34 +93,14 @@ export class MapContainer extends React.Component {
         <div>
           <Container>
             <div style={{ margin: "40px" }}>
-              <InputGroup>
-                <InputGroupAddon addonType="prepend">
-                  <h3>
-                    <Badge>From</Badge>
-                  </h3>
-                </InputGroupAddon>
-                <Input onChange={this.handlePostcode.bind(this)} />
-              </InputGroup>
-              <InputGroup>
-                <Input onChange={this.handlePostcode.bind(this)} />
-                <InputGroupAddon>
-                  <h3>
-                    <Badge>To</Badge>
-                  </h3>
-                </InputGroupAddon>
-              </InputGroup>
-
-              <CustomInput
-                type="radio"
-                id="exampleCustomRadio"
-                name="customRadio"
-                label="Click to save this route"
-              >
-                <Button onClick={() => this.calculateRoute()}>Route it</Button>
-              </CustomInput>
+              <div className="d-inline">
+                <RouteForm
+                  handleCoords={this.getCoordsPostcode}
+                  calculateRoute={this.state.calculateRoute}
+                />
+              </div>
             </div>
           </Container>
-          <RouteForm />
           <Routes selectRoute={this.state.selectRoute} />
         </div>
         <div className="container-fluid border-bottom" id="map">

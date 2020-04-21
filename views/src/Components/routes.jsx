@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { Container, FormGroup, Label, Input } from "reactstrap";
 
 class Route extends Component {
-  state = {};
-
   render() {
     let routes = [
       {
