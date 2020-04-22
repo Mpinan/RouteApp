@@ -14,8 +14,31 @@ class RouteForm extends Component {
       lat: 51.515103,
       lng: -1.508119,
     },
+    userID: 2,
     route: [],
   };
+
+  addRoute(route) {
+    console.log(route);
+    fetch("http://localhost:3001/create/route", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: "Token token=" + sessionStorage.getItem("session_key"),
+      },
+      body: JSON.stringify({
+        route: route[0],
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Errorcito:", error);
+      })
+      .catch((err) => console.log(err));
+  }
 
   handleFadeIn() {
     this.setState({ fadeIn: !this.state.fadeIn });
@@ -42,16 +65,9 @@ class RouteForm extends Component {
 
   render() {
     const saveRoute = () => {
-      //   console.log(this.state);
-      let route = [];
-      route.push(
-        this.state.name,
-        this.state.method,
-        this.state.origin,
-        this.state.destination
-      );
-      this.setState({ route });
-      console.log(route);
+      const { name, method, origin, destination, userID, route } = this.state;
+      route.push(name, method, origin, destination, userID);
+      this.addRoute(route);
     };
 
     return (

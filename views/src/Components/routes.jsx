@@ -50,6 +50,7 @@ class Route extends Component {
             {routes.map((route) => {
               return (
                 <option
+                  key={route.id}
                   onDoubleClick={() =>
                     this.props.selectRoute(
                       route.journey.origin,
