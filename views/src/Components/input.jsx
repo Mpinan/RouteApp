@@ -17,19 +17,6 @@ class RouteForm extends Component {
     route: [],
   };
 
-  saveRoute() {
-    console.log(this.state);
-    // let route = [];
-    // route.push(
-    //   this.state.name,
-    //   this.state.method,
-    //   this.state.origin,
-    //   this.state.destination
-    // );
-    // this.setState({ route });
-    // console.log(route);
-  }
-
   handleFadeIn() {
     this.setState({ fadeIn: !this.state.fadeIn });
   }
@@ -54,6 +41,19 @@ class RouteForm extends Component {
   };
 
   render() {
+    const saveRoute = () => {
+      //   console.log(this.state);
+      let route = [];
+      route.push(
+        this.state.name,
+        this.state.method,
+        this.state.origin,
+        this.state.destination
+      );
+      this.setState({ route });
+      console.log(route);
+    };
+
     return (
       <div>
         <Row form>
@@ -95,7 +95,7 @@ class RouteForm extends Component {
                 placeholder="WALKING or DRIVING"
               />
             </FormGroup>
-            <Button onClick={this.saveRoute}>Save it</Button>
+            <Button onClick={saveRoute}>Save it</Button>
           </div>
         </Fade>
         <Button color="success" onClick={this.props.calculateRoute}>
