@@ -84,7 +84,7 @@ class RouteForm extends Component {
               <Badge color="success">METHOD</Badge>
               <Input placeholder="WALKING or DRIVING" />
             </FormGroup>
-            <Input onClick={this.saveRoute} type="checkbox" /> Save it
+            <Input onChange={this.saveRoute} type="checkbox" /> Save it
           </div>
         </Fade>
         <Button color="success" onClick={this.props.calculateRoute}>

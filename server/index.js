@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const queries = require("./querys");
+const userQueries = require("./Queries/userQuerys");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
@@ -14,19 +14,19 @@ const helmet = require("helmet"); // creates headers that protect from attacks (
 app.use(
   bodyParser.json(),
   bodyParser.urlencoded({
-    extended: true
+    extended: true,
   })
 );
 
 const whitelist = ["http://localhost:3000"];
 const corsOptions = {
-  origin: function(origin, callback) {
+  origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
     }
-  }
+  },
 };
 
 app.use(helmet());
@@ -38,11 +38,11 @@ app.get("/", (request, response) => {
 
 //Routes
 
-app.get("/users", queries.getUsers);
+app.get("/users", userQueries.getUsers);
 
 app.get("/user/:id", (req, res, next) => {
   console.log(req);
-  queries.findUserByEmail(req.body.email).then(user => {
+  userQueries.findUserByEmail(req.body.email).then((user) => {
     console.log(user);
   });
 });
@@ -50,18 +50,18 @@ app.get("/user/:id", (req, res, next) => {
 app.post("/login/user", (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
-  queries
+  userQueries
     .findUserByUsername(username)
-    .then(user => {
+    .then((user) => {
       const userID = user.rows[0].uid;
       const hash = user.rows[0].password;
-      bcrypt.compare(password, hash).then(results => {
+      bcrypt.compare(password, hash).then((results) => {
         if (results) {
           jwt.sign({ user: req.body }, "secretKey", (err, token) => {
             res.json({
               userID,
               username,
-              token
+              token,
             });
           });
         } else {
@@ -69,30 +69,30 @@ app.post("/login/user", (req, res, next) => {
         }
       });
     })
-    .catch(err => {
+    .catch((err) => {
       return res.status(401).send("Wrong user");
     });
 });
 
 app.post("/signup/users", (req, res, next) => {
-  queries
+  userQueries
     .findUserByEmail(req.body.user.email)
-    .then(user => {
+    .then((user) => {
       console.log(user.rows);
       if (user.rows.length > 0) {
         res.status(401).send("this email is already in use");
       } else {
-        queries.createUser(req.body.user, res);
+        userQueries.createUser(req.body.user, res);
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).send("Something went wrong");
     });
 });
 
-app.put("/user/:id", queries.updateUser);
-app.delete("/user/:id", queries.deleteUser);
+app.put("/user/:id", userQueries.updateUser);
+app.delete("/user/:id", userQueries.deleteUser);
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
