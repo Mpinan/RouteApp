@@ -19,6 +19,11 @@ class RouteForm extends Component {
     route: [],
   };
 
+  //   {
+  //   "{\"lat\":\"51.515103\",\"lng\":\"51.515103\"}",
+  //   "{\"lat\":\"-0.508119\",\"lng\":\"-1.508119\"}",
+  // }
+
   saveRoute() {
     let name = "work";
     let method = "walking";

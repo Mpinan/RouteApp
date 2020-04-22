@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const userQueries = require("./Queries/userQuerys");
+const routesQueries = require("./Queries/routesQueries");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
@@ -36,7 +37,7 @@ app.get("/", (request, response) => {
   response.json({ info: "Node.js, Express, and Postgres API" });
 });
 
-//Routes
+//UserRoutes
 
 app.get("/users", userQueries.getUsers);
 
@@ -109,3 +110,8 @@ verifyToken = (req, res, next) => {
     res.sendStatus(403);
   }
 };
+
+// RoutesRoutes
+
+app.get("/routes", routesQueries.getRoutes);
+app.post("/create/route", routesQueries.createRoute);
