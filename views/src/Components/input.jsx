@@ -4,42 +4,30 @@ import { Row, Col, FormGroup, Fade, Input, Button, Badge } from "reactstrap";
 class RouteForm extends Component {
   state = {
     fadeIn: false,
-    name: "walk",
-    method: "walking",
-    journey: {
-      origin: {
-        lat: 51.515103,
-        lng: -0.508119,
-      },
-      destination: {
-        lat: 51.515103,
-        lng: -1.508119,
-      },
+    name: "",
+    method: "",
+    origin: {
+      lat: 51.515103,
+      lng: -0.508119,
+    },
+    destination: {
+      lat: 51.515103,
+      lng: -1.508119,
     },
     route: [],
   };
 
-  //   {
-  //   "{\"lat\":\"51.515103\",\"lng\":\"51.515103\"}",
-  //   "{\"lat\":\"-0.508119\",\"lng\":\"-1.508119\"}",
-  // }
-
   saveRoute() {
-    let name = "work";
-    let method = "walking";
-    let journey = {
-      origin: {
-        lat: 51.515103,
-        lng: -0.508119,
-      },
-      destination: {
-        lat: 51.515103,
-        lng: -1.508119,
-      },
-    };
-    let route = [];
-    route.push(name, method, journey);
-    console.log(route);
+    console.log(this.state);
+    // let route = [];
+    // route.push(
+    //   this.state.name,
+    //   this.state.method,
+    //   this.state.origin,
+    //   this.state.destination
+    // );
+    // this.setState({ route });
+    // console.log(route);
   }
 
   handleFadeIn() {
@@ -51,6 +39,18 @@ class RouteForm extends Component {
       postcode: event.target.value,
     });
     this.props.handleCoords(event.target.value);
+  };
+
+  handleName = (event) => {
+    this.setState({
+      name: event.target.value,
+    });
+  };
+
+  handleMethod = (event) => {
+    this.setState({
+      method: event.target.value,
+    });
   };
 
   render() {
@@ -83,13 +83,19 @@ class RouteForm extends Component {
           <div>
             <FormGroup>
               <Badge color="success">NAME OF THE ROUTE</Badge>
-              <Input placeholder="Work, Home, Shop..." />
+              <Input
+                onChange={this.handleName.bind(this)}
+                placeholder="Work, Home, Shop..."
+              />
             </FormGroup>
             <FormGroup>
               <Badge color="success">METHOD</Badge>
-              <Input placeholder="WALKING or DRIVING" />
+              <Input
+                onChange={this.handleMethod.bind(this)}
+                placeholder="WALKING or DRIVING"
+              />
             </FormGroup>
-            <Input onChange={this.saveRoute} type="checkbox" /> Save it
+            <Button onClick={this.saveRoute}>Save it</Button>
           </div>
         </Fade>
         <Button color="success" onClick={this.props.calculateRoute}>
