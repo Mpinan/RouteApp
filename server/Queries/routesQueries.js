@@ -43,13 +43,13 @@ const createRoute = (request, response) => {
   const { name, method, origin, destination, uid } = request;
 
   pool.query(
-    `INSERT INTO routes (name, method) VALUES ($1, $2, $3, $4, $5 )`,
+    `INSERT INTO routes (name, method, origin, destination, uid) VALUES ($1, $2, $3, $4, $5 )`,
     [name, method, origin, destination, uid],
     (error, results) => {
       if (error) {
         response.status(500).send("errorcito");
       } else {
-        response.status(201).send(results);
+        response.status(201).send("RUTA NUEVA");
       }
     }
   );
