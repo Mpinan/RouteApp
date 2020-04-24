@@ -3,6 +3,7 @@ import { Row, Col, FormGroup, Fade, Input, Button, Badge } from "reactstrap";
 
 class RouteForm extends Component {
   state = {
+    userID: sessionStorage.getItem("user_id"),
     fadeIn: false,
     name: "",
     method: "",
@@ -18,8 +19,7 @@ class RouteForm extends Component {
     route: [],
   };
 
-  addRoute(route) {
-    console.log(route);
+  addRoute() {
     fetch("http://localhost:3001/create/route", {
       method: "POST",
       headers: {
@@ -27,7 +27,13 @@ class RouteForm extends Component {
         // Authorization: "Token token=" + sessionStorage.getItem("session_key"),
       },
       body: JSON.stringify({
-        route: route[0],
+        route: {
+          name: this.state.name,
+          method: this.state.method,
+          origin: this.state.origin,
+          destination: this.state.destination,
+          userID: 2,
+        },
       }),
     })
       .then((response) => response.json())
