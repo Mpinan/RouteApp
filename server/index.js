@@ -114,4 +114,6 @@ verifyToken = (req, res, next) => {
 // RoutesRoutes
 
 app.get("/routes", routesQueries.getRoutes);
-app.post("/create/route", routesQueries.createRoute);
+app.post("/create/route", (req, res, next) => {
+  routesQueries.createRoute(req, res);
+});

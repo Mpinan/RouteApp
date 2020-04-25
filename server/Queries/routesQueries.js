@@ -40,11 +40,12 @@ const getRoutes = (request, response) => {
 //   };
 
 const createRoute = (request, response) => {
-  const { name, method, origin, destination, uid } = request;
+  console.log(request.body.route, "request");
+  const { name, method, origin, destination, userID } = request.body.route;
 
   pool.query(
     `INSERT INTO routes (name, method, origin, destination, uid) VALUES ($1, $2, $3, $4, $5 )`,
-    [name, method, origin, destination, uid],
+    [name, method, origin, destination, userID],
     (error, results) => {
       if (error) {
         response.status(500).send("errorcito");

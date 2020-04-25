@@ -17,7 +17,7 @@ CREATE TABLE routes (
   method VARCHAR(255),
   origin JSON,
   destination JSON,
-  uid INTEGER UNIQUE
+  uid INTEGER
 );
 
 DELETE FROM users
