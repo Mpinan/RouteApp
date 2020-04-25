@@ -2,41 +2,23 @@ import React, { Component } from "react";
 import { Container, FormGroup, Label, Input } from "reactstrap";
 
 class Route extends Component {
-  render() {
-    let routes = [
-      {
-        id: 0,
-        name: "HOME",
-        journey: {
-          origin: {
-            lat: 51.515103,
-            lng: -0.508119,
-          },
-          destination: {
-            lat: 51.515103,
-            lng: -1.508119,
-          },
-        },
-        method: "WALKING",
-      },
-      {
-        id: 1,
-        name: "WORK",
-        journey: {
-          origin: {
-            lat: 51.515103,
-            lng: -0.508119,
-          },
-          destination: {
-            lat: 50.515103,
-            lng: -2.508119,
-          },
-        },
-        method: "WALKING",
-        uid: sessionStorage.getItem("userID"),
-      },
-    ];
+  state = {
+    routes: [],
+  };
+  getRoutes() {
+    fetch("http://localhost:3001/routes")
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => this.setState({ routes: result }))
+      .catch((err) => console.log(err));
+  }
 
+  componentDidMount() {
+    this.getRoutes();
+  }
+
+  render() {
     return (
       <Container>
         <FormGroup>
@@ -47,15 +29,12 @@ class Route extends Component {
             id="exampleSelectMulti"
             multiple
           >
-            {routes.map((route) => {
+            {this.state.routes.map((route) => {
               return (
                 <option
                   key={route.id}
                   onDoubleClick={() =>
-                    this.props.selectRoute(
-                      route.journey.origin,
-                      route.journey.destination
-                    )
+                    this.props.selectRoute(route.origin, route.destination)
                   }
                 >
                   {route.name}
