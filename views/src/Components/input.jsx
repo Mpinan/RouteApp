@@ -7,16 +7,9 @@ class RouteForm extends Component {
     fadeIn: false,
     name: "",
     method: "",
-    origin: {
-      lat: 51.515103,
-      lng: -0.508119,
-    },
-    destination: {
-      lat: 51.515103,
-      lng: -1.508119,
-    },
-    userID: 2,
-    route: [],
+    origin: {},
+    destination: {},
+    userID: sessionStorage.getItem("userID"),
   };
 
   addRoute() {
@@ -32,7 +25,7 @@ class RouteForm extends Component {
           method: this.state.method,
           origin: this.state.origin,
           destination: this.state.destination,
-          userID: 2,
+          userID: this.state.userID,
         },
       }),
     })
