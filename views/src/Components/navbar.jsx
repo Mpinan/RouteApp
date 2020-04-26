@@ -6,10 +6,10 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
 } from "reactstrap";
 
-const NavBar = props => {
+const NavBar = (props) => {
   const [collapsed, setCollapsed] = useState(true);
 
   const toggleNavbar = () => setCollapsed(!collapsed);
@@ -29,12 +29,11 @@ const NavBar = props => {
     } else {
       return (
         <NavItem>
-          <NavItem>
-            <NavLink href="/profile">Profile</NavLink>
-          </NavItem>
+          <NavLink href="/profile">Profile</NavLink>
           <NavLink href="/logout" onClick={logOut}>
             Log out
           </NavLink>
+          <NavLink href="/userpage">Routing</NavLink>
         </NavItem>
       );
     }
@@ -54,9 +53,6 @@ const NavBar = props => {
             </NavItem>
             <NavItem>
               <NavLink href="/contact">Contact us</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/userpage">Routing</NavLink>
             </NavItem>
 
             <Nav navbar>{handleButton()}</Nav>
