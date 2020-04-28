@@ -89,6 +89,7 @@ export class MapContainer extends React.Component {
                 <RouteForm
                   handleCoords={this.getCoordsPostcode}
                   calculateRoute={this.state.calculateRoute}
+                  route={this.state.route}
                 />
               </div>
             </div>

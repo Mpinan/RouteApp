@@ -5,6 +5,7 @@ class Route extends Component {
   state = {
     routes: [],
   };
+
   getRoutes() {
     fetch("http://localhost:3001/routes")
       .then((response) => {
@@ -22,7 +23,7 @@ class Route extends Component {
     return (
       <Container>
         <FormGroup>
-          <Label for="exampleSelectMulti">Select saved Route</Label>
+          <Label>Select saved Route</Label>
           <Input
             type="select"
             name="selectMulti"

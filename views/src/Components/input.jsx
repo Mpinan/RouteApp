@@ -7,12 +7,11 @@ class RouteForm extends Component {
     fadeIn: false,
     name: "",
     method: "",
-    origin: {},
-    destination: {},
-    userID: sessionStorage.getItem("userID"),
+    route: this.props.route,
   };
 
   addRoute() {
+    console.log(this.props.route[0]);
     fetch("http://localhost:3001/create/route", {
       method: "POST",
       headers: {
@@ -23,9 +22,9 @@ class RouteForm extends Component {
         route: {
           name: this.state.name,
           method: this.state.method,
-          origin: this.state.origin,
-          destination: this.state.destination,
-          userID: this.state.userID,
+          origin: this.props.route[0],
+          destination: this.props.route[1],
+          userID: sessionStorage.getItem("userID"),
         },
       }),
     })
@@ -64,8 +63,8 @@ class RouteForm extends Component {
 
   render() {
     const saveRoute = () => {
-      const { name, method, origin, destination, userID, route } = this.state;
-      route.push(name, method, origin, destination, userID);
+      const { name, method, origin, destination, route } = this.state;
+      route.push(name, method, origin, destination);
       this.addRoute(route);
     };
 

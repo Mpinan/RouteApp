@@ -51,10 +51,6 @@ const NavBar = (props) => {
             <NavItem>
               <NavLink href="/about">About us</NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink href="/contact">Contact us</NavLink>
-            </NavItem>
-
             <Nav navbar>{handleButton()}</Nav>
           </Nav>
         </Collapse>
