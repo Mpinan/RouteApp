@@ -1,77 +1,58 @@
 import React, { Component } from "react";
 import { Button, Col, Form, FormGroup, Label, Input, Alert } from "reactstrap";
 import { Redirect } from "react-router-dom";
+import { saveSession, validateLogIn } from "../helpers";
 
 class Login extends Component {
   state = {
     redirect: false,
     username: "",
     password: "",
-    errors: {}
-  };
-
-  validate = () => {
-    const errors = {};
-
-    if (this.state.username.trim() === "") {
-      errors.username = "Username is required";
-    }
-    if (this.state.password.trim() === "") {
-      errors.password = "Password is required";
-    }
-
-    return Object.keys(errors).length === 0 ? null : errors;
+    errors: {},
   };
 
   findUser = () => {
     fetch("http://localhost:3001/login/user", {
       method: "post",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         username: this.state.username,
-        password: this.state.password
-      })
+        password: this.state.password,
+      }),
     })
-      .then(response => response.json())
-      .then(data => this.saveSession(data))
-      .then(setTimeout(this.setRedirect(), 2000))
-      .catch(err => console.log(err, "hi i am an error"));
+      .then((response) => response.json())
+      .then((data) => saveSession(data))
+      .catch((err) => console.log(err, "Error"));
   };
 
-  saveSession = data => {
-    sessionStorage.setItem("userID", data.userID);
-    sessionStorage.setItem("session_key", data.token);
-    sessionStorage.setItem("username", data.username);
-  };
-
-  handlePassword = event => {
+  handlePassword = (event) => {
     this.setState({
-      password: event.target.value
+      password: event.target.value,
     });
   };
 
-  handleUsername = event => {
+  handleUsername = (event) => {
     this.setState({
-      username: event.target.value
+      username: event.target.value,
     });
   };
 
-  handleLogin = e => {
+  handleLogin = (e) => {
     e.preventDefault();
-    const errors = this.validate();
+    const errors = validateLogIn();
     this.setState({ errors });
     if (errors) return;
     this.findUser();
     this.setState({
-      session: this.state.username
+      session: this.state.username,
     });
   };
 
   setRedirect() {
     this.setState({
-      redirect: true
+      redirect: true,
     });
   }
 

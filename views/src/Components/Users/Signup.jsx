@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input, Alert } from "reactstrap";
 import { Redirect } from "react-router-dom";
+import { validateSignUp } from "../helpers";
 
 // const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -12,30 +13,12 @@ class SignUp extends Component {
     confirm_email: "",
     password: "",
     errors: {},
-    redirect: false
+    redirect: false,
   };
 
-  validate = () => {
-    const errors = {};
-    if (!this.state.email) {
-      errors.email = "Email is required";
-    }
-    if (this.state.email !== this.state.confirm_email) {
-      errors.confirm_email = "Email is different";
-    }
-    if (this.state.username.trim() === "") {
-      errors.username = "Username is required";
-    }
-    if (this.state.password.trim() === "") {
-      errors.password = "Password is required";
-    }
-
-    return Object.keys(errors).length === 0 ? null : errors;
-  };
-
-  handleLogin = e => {
+  handleLogin = (e) => {
     e.preventDefault();
-    const errors = this.validate();
+    const errors = validateSignUp();
     this.setState({ errors: errors || {} });
     if (errors) return;
     this.newUserAdd(e);
@@ -43,7 +26,7 @@ class SignUp extends Component {
   };
 
   // Is used to store what the user is typing
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -52,26 +35,26 @@ class SignUp extends Component {
   }
 
   // Sends a post request to create a new user
-  newUserAdd = e => {
+  newUserAdd = (e) => {
     e.preventDefault();
     console.log(this.state, "----1");
     fetch("http://localhost:3001/signup/users", {
       method: "post",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         user: {
           username: this.state.username,
           email: this.state.email,
           confirm_email: this.state.confirm_email,
-          password: this.state.password
-        }
-      })
+          password: this.state.password,
+        },
+      }),
     })
-      .then(response => response.json())
+      .then((response) => response.json())
       .then(this.setRedirect())
-      .catch(err => {
+      .catch((err) => {
         console.error("Error:", err);
       });
   };

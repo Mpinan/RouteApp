@@ -2,7 +2,6 @@ import React from "react";
 import Routes from "../routes";
 import RouteForm from "../input";
 import { Container } from "reactstrap";
-
 import { Map, InfoWindow, GoogleApiWrapper } from "google-maps-react";
 
 const apiKey = "AIzaSyDro0XKEZYd8mj42cXWVukmO0WKJstaAYs&callback=";

@@ -3,9 +3,7 @@ const bodyParser = require("body-parser");
 const userQueries = require("./Queries/userQuerys");
 const routesQueries = require("./Queries/routesQueries");
 const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
 const bcrypt = require("bcrypt");
-const Pool = require("pg").Pool;
 
 const app = express();
 const port = 3001;
