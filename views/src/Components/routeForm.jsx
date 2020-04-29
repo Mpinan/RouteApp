@@ -11,12 +11,10 @@ class RouteForm extends Component {
   };
 
   addRoute() {
-    console.log(this.props.route[0]);
     fetch("http://localhost:3001/create/route", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: "Token token=" + sessionStorage.getItem("session_key"),
       },
       body: JSON.stringify({
         route: {
@@ -33,7 +31,7 @@ class RouteForm extends Component {
         console.log("Success:", data);
       })
       .catch((error) => {
-        console.error("Errorcito:", error);
+        console.error("Error:", error);
       })
       .catch((err) => console.log(err));
   }

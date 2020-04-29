@@ -22,7 +22,6 @@ class SignUp extends Component {
     this.setState({ errors: errors || {} });
     if (errors) return;
     this.newUserAdd(e);
-    // this.render();
   };
 
   // Is used to store what the user is typing
