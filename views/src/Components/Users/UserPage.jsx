@@ -1,6 +1,6 @@
 import React from "react";
 import Routes from "../routes";
-import RouteForm from "../input";
+import RouteForm from "../routeForm";
 import { Container } from "reactstrap";
 import { Map, InfoWindow, GoogleApiWrapper } from "google-maps-react";
 

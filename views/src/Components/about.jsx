@@ -1,13 +1,15 @@
 import React from "react";
+import { Container } from "reactstrap";
 
 const About = () => {
   return (
-    <div>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quam vero
-      dolorem dolorum blanditiis neque asperiores necessitatibus, repellendus
-      assumenda porro nulla deleniti unde nobis, rem ad esse. Recusandae non
-      facere ratione.
-    </div>
+    <Container>
+      <h2>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus ipsam
+        earum quod facilis recusandae, pariatur ullam vitae dolorem adipisci non
+        praesentium impedit eveniet. Cum unde omnis soluta dolorum atque ullam!
+      </h2>
+    </Container>
   );
 };
 
