@@ -1,28 +1,28 @@
 import React, { Component } from "react";
-import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
+import { Container, Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 import { Redirect } from "react-router-dom";
 
 class Profile extends Component {
   state = {
     redirect: false,
     modal: false,
-    currentUserId: sessionStorage.getItem("userID")
+    currentUserId: sessionStorage.getItem("userID"),
   };
 
-  deleteUser = id => {
+  deleteUser = (id) => {
     fetch(`http://localhost:3001/user/${id}`, {
       method: "Delete",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Token token=" + sessionStorage.getItem("session_key")
+        Authorization: "Token token=" + sessionStorage.getItem("session_key"),
       },
       body: JSON.stringify({
         username: this.state.username,
-        password: this.state.password
-      })
+        password: this.state.password,
+      }),
     })
-      .then(response => response.json())
-      .catch(err => console.log(err, "hi i am an error"));
+      .then((response) => response.json())
+      .catch((err) => console.log(err, "hi i am an error"));
   };
 
   handleDeleteUser = () => {
@@ -34,13 +34,13 @@ class Profile extends Component {
 
   handleModal = () => {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
     });
   };
 
   setRedirect() {
     this.setState({
-      redirect: true
+      redirect: true,
     });
   }
 
@@ -53,7 +53,7 @@ class Profile extends Component {
   render() {
     const { modal } = this.state;
     return (
-      <div>
+      <Container>
         <Button color="danger" onClick={this.handleModal}>
           Delete your account with id {this.state.currentUserId}
         </Button>
@@ -69,7 +69,7 @@ class Profile extends Component {
             </Button>
           </ModalFooter>
         </Modal>
-      </div>
+      </Container>
     );
   }
 }
