@@ -1,7 +1,14 @@
 import React, { Component } from "react";
-import { Button, Form, FormGroup, Label, Input, Alert } from "reactstrap";
+import {
+  Container,
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Alert,
+} from "reactstrap";
 import { Redirect } from "react-router-dom";
-import { validateSignUp } from "../helpers";
 
 // const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -16,9 +23,27 @@ class SignUp extends Component {
     redirect: false,
   };
 
+  validateSignUp = () => {
+    const errors = {};
+    if (!this.state.email) {
+      errors.email = "Email is required";
+    }
+    if (this.state.email !== this.state.confirm_email) {
+      errors.confirm_email = "Email is different";
+    }
+    if (this.state.username.trim() === "") {
+      errors.username = "Username is required";
+    }
+    if (this.state.password.trim() === "") {
+      errors.password = "Password is required";
+    }
+
+    return Object.keys(errors).length === 0 ? null : errors;
+  };
+
   handleLogin = (e) => {
     e.preventDefault();
-    const errors = validateSignUp();
+    const errors = this.validateSignUp();
     this.setState({ errors: errors || {} });
     if (errors) return;
     this.newUserAdd(e);
@@ -70,62 +95,69 @@ class SignUp extends Component {
 
   render() {
     return (
-      <Form style={{ margin: "50px 0" }} onSubmit={this.handleLogin.bind(this)}>
-        {this.renderRedirect()}
-        <FormGroup>
-          <Label for="username">Username</Label>
-          <Input
-            type="text"
-            name="username"
-            id="username"
-            onChange={this.onChange}
-            value={this.state.username === null ? "" : this.state.username}
-          />
-          {this.state.errors && <Alert>{this.state.errors.username}</Alert>}
-        </FormGroup>
-        <FormGroup>
-          <Label for="email">Email</Label>
-          <Input
-            type="text"
-            name="email"
-            id="email"
-            onChange={this.onChange}
-            value={this.state.email === null ? "" : this.state.email}
-          />
-          {this.state.errors && <Alert>{this.state.errors.email}</Alert>}
-        </FormGroup>
-        <FormGroup>
-          <Label for="confirm">Confirm Email</Label>
-          <Input
-            type="text"
-            name="confirm_email"
-            id="confirm_email"
-            onChange={this.onChange}
-            value={
-              this.state.confirm_email === null ? "" : this.state.confirm_email
-            }
-          />
-          {this.state.errors && (
-            <Alert>{this.state.errors.confirm_email}</Alert>
-          )}
-        </FormGroup>
-        <FormGroup>
-          <Label for="password">Password</Label>
-          <Input
-            type="password"
-            name="password"
-            id="password"
-            onChange={this.onChange}
-            value={this.state.password === null ? "" : this.state.password}
-            errors={this.state.errors}
-          />
-          {this.state.errors && <Alert>{this.state.errors.password}</Alert>}
-        </FormGroup>
+      <Container>
+        <Form
+          style={{ margin: "50px 0" }}
+          onSubmit={this.handleLogin.bind(this)}
+        >
+          {this.renderRedirect()}
+          <FormGroup>
+            <Label for="username">Username</Label>
+            <Input
+              type="text"
+              name="username"
+              id="username"
+              onChange={this.onChange}
+              value={this.state.username === null ? "" : this.state.username}
+            />
+            {this.state.errors && <Alert>{this.state.errors.username}</Alert>}
+          </FormGroup>
+          <FormGroup>
+            <Label for="email">Email</Label>
+            <Input
+              type="text"
+              name="email"
+              id="email"
+              onChange={this.onChange}
+              value={this.state.email === null ? "" : this.state.email}
+            />
+            {this.state.errors && <Alert>{this.state.errors.email}</Alert>}
+          </FormGroup>
+          <FormGroup>
+            <Label for="confirm">Confirm Email</Label>
+            <Input
+              type="text"
+              name="confirm_email"
+              id="confirm_email"
+              onChange={this.onChange}
+              value={
+                this.state.confirm_email === null
+                  ? ""
+                  : this.state.confirm_email
+              }
+            />
+            {this.state.errors && (
+              <Alert>{this.state.errors.confirm_email}</Alert>
+            )}
+          </FormGroup>
+          <FormGroup>
+            <Label for="password">Password</Label>
+            <Input
+              type="password"
+              name="password"
+              id="password"
+              onChange={this.onChange}
+              value={this.state.password === null ? "" : this.state.password}
+              errors={this.state.errors}
+            />
+            {this.state.errors && <Alert>{this.state.errors.password}</Alert>}
+          </FormGroup>
 
-        <Button color="secondary" size="lg" block>
-          Submit
-        </Button>
-      </Form>
+          <Button color="secondary" size="lg" block>
+            Submit
+          </Button>
+        </Form>
+      </Container>
     );
   }
 }
