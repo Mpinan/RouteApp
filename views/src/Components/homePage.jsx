@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <Container>
       <div>
-        <Jumbotron style={{ background: "none" }}>
+        <Jumbotron style={{ background: "none", position: "center" }}>
           <h1 className="display-3">Hello, routers!</h1>
           <p className="lead">
             Welcome to the RutaPP, a route app to plan your journey!

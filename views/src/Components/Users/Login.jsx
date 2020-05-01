@@ -34,6 +34,7 @@ class Login extends Component {
     })
       .then((response) => response.json())
       .then((data) => saveSession(data))
+      .then(this.setRedirect())
       .catch((err) => console.log(err, "Error"));
   };
 
