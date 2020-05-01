@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect, Router } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -17,6 +17,7 @@ const NavBar = (props) => {
 
   const logOut = () => {
     sessionStorage.clear();
+    return <Redirect to={`/home`} />;
   };
 
   const handleButton = () => {

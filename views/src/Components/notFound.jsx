@@ -4,7 +4,7 @@ import { Container } from "reactstrap";
 const NotFound = () => {
   return (
     <Container>
-      <h1>Not Found</h1>;
+      <h1>Not Found</h1>
     </Container>
   );
 };

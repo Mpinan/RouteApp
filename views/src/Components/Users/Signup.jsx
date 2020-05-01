@@ -102,29 +102,15 @@ class SignUp extends Component {
   render() {
     return (
       <Container>
-        <div className={this.state.classname}>
-          {this.state.errors && (
-            <Alert className="alert-danger">{this.state.errors.username}</Alert>
-          )}
-          {this.state.errors && (
-            <Alert className="alert-danger">{this.state.errors.password}</Alert>
-          )}
-          {this.state.errors && (
-            <Alert className="alert-danger">{this.state.errors.email}</Alert>
-          )}
-          {this.state.errors && (
-            <Alert className="alert-danger">
-              {this.state.errors.confirm_email}
-            </Alert>
-          )}
-        </div>
         <Form
           style={{ margin: "50px 0" }}
           onSubmit={this.handleLogin.bind(this)}
         >
           {this.renderRedirect()}
           <FormGroup>
-            <Label for="username">Username</Label>
+            <Label for="username">
+              <b>Username</b>
+            </Label>
             <Input
               type="text"
               name="username"
@@ -134,7 +120,9 @@ class SignUp extends Component {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="email">Email</Label>
+            <Label for="email">
+              <b>Email</b>
+            </Label>
             <Input
               type="text"
               name="email"
@@ -144,7 +132,9 @@ class SignUp extends Component {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="confirm">Confirm Email</Label>
+            <Label for="confirm">
+              <b>Confirm Email</b>
+            </Label>
             <Input
               type="text"
               name="confirm_email"
@@ -158,7 +148,9 @@ class SignUp extends Component {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="password">Password</Label>
+            <Label for="password">
+              <b>Password</b>
+            </Label>
             <Input
               type="password"
               name="password"
@@ -172,6 +164,26 @@ class SignUp extends Component {
           <Button color="secondary" size="lg" block>
             Submit
           </Button>
+          <div className={this.state.classname}>
+            {this.state.errors && (
+              <Alert className="alert-danger">
+                {this.state.errors.username}
+              </Alert>
+            )}
+            {this.state.errors && (
+              <Alert className="alert-danger">
+                {this.state.errors.password}
+              </Alert>
+            )}
+            {this.state.errors && (
+              <Alert className="alert-danger">{this.state.errors.email}</Alert>
+            )}
+            {this.state.errors && (
+              <Alert className="alert-danger">
+                {this.state.errors.confirm_email}
+              </Alert>
+            )}
+          </div>
         </Form>
       </Container>
     );
