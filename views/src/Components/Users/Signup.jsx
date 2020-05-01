@@ -115,6 +115,7 @@ class SignUp extends Component {
               type="text"
               name="username"
               id="username"
+              placeholder="Username..."
               onChange={this.onChange}
               value={this.state.username === null ? "" : this.state.username}
             />
@@ -127,6 +128,7 @@ class SignUp extends Component {
               type="text"
               name="email"
               id="email"
+              placeholder="Email..."
               onChange={this.onChange}
               value={this.state.email === null ? "" : this.state.email}
             />
@@ -139,6 +141,7 @@ class SignUp extends Component {
               type="text"
               name="confirm_email"
               id="confirm_email"
+              placeholder="Confirm Email..."
               onChange={this.onChange}
               value={
                 this.state.confirm_email === null
@@ -155,13 +158,14 @@ class SignUp extends Component {
               type="password"
               name="password"
               id="password"
+              placeholder="Password..."
               onChange={this.onChange}
               value={this.state.password === null ? "" : this.state.password}
               errors={this.state.errors}
             />
           </FormGroup>
 
-          <Button color="secondary" size="lg" block>
+          <Button color="dark" size="lg" block>
             Submit
           </Button>
           <div className={this.state.classname}>

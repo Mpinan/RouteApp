@@ -105,36 +105,35 @@ class Login extends Component {
         <Form style={{ margin: "50px 0" }}>
           {this.renderRedirectAfterLogIn()}
           <FormGroup row>
-            <Label for="exampleEmail" sm={2} size="lg">
-              Username
+            <Label sm={2} size="lg">
+              <b>Username</b>
             </Label>
             <Col sm={10}>
               <Input
                 type="username"
                 name="username"
-                id="exampleEmail"
-                placeholder="username"
+                placeholder="Username..."
                 bsSize="lg"
                 onChange={this.handleUsername.bind(this)}
               />
             </Col>
           </FormGroup>
           <FormGroup row>
-            <Label for="exampleEmail2" sm={2}>
-              Password
+            <Label sm={2} size="lg">
+              <b>Password</b>
             </Label>
             <Col sm={10}>
               <Input
                 type="password"
                 name="password"
-                id="exampleEmail2"
-                placeholder="password"
+                placeholder="Password..."
+                bsSize="lg"
                 onChange={this.handlePassword.bind(this)}
               />
             </Col>
           </FormGroup>
           <Button
-            color="secondary"
+            color="dark"
             size="lg"
             block
             onClick={this.handleLogin.bind(this)}
