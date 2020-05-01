@@ -4,10 +4,6 @@ const saveSession = (data) => {
   sessionStorage.setItem("username", data.username);
 };
 
-//Validate login
-
-// Validate SignUp
-
 module.exports = {
   saveSession,
 };

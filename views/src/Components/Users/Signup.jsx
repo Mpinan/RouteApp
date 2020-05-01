@@ -21,21 +21,27 @@ class SignUp extends Component {
     password: "",
     errors: {},
     redirect: false,
+    classname: "invisible",
   };
 
   validateSignUp = () => {
     const errors = {};
+    let classname = "visible";
     if (!this.state.email) {
       errors.email = "Email is required";
+      this.setState({ classname });
     }
     if (this.state.email !== this.state.confirm_email) {
       errors.confirm_email = "Email is different";
+      this.setState({ classname });
     }
     if (this.state.username.trim() === "") {
       errors.username = "Username is required";
+      this.setState({ classname });
     }
     if (this.state.password.trim() === "") {
       errors.password = "Password is required";
+      this.setState({ classname });
     }
 
     return Object.keys(errors).length === 0 ? null : errors;
@@ -96,6 +102,22 @@ class SignUp extends Component {
   render() {
     return (
       <Container>
+        <div className={this.state.classname}>
+          {this.state.errors && (
+            <Alert className="alert-danger">{this.state.errors.username}</Alert>
+          )}
+          {this.state.errors && (
+            <Alert className="alert-danger">{this.state.errors.password}</Alert>
+          )}
+          {this.state.errors && (
+            <Alert className="alert-danger">{this.state.errors.email}</Alert>
+          )}
+          {this.state.errors && (
+            <Alert className="alert-danger">
+              {this.state.errors.confirm_email}
+            </Alert>
+          )}
+        </div>
         <Form
           style={{ margin: "50px 0" }}
           onSubmit={this.handleLogin.bind(this)}
@@ -110,7 +132,6 @@ class SignUp extends Component {
               onChange={this.onChange}
               value={this.state.username === null ? "" : this.state.username}
             />
-            {this.state.errors && <Alert>{this.state.errors.username}</Alert>}
           </FormGroup>
           <FormGroup>
             <Label for="email">Email</Label>
@@ -121,7 +142,6 @@ class SignUp extends Component {
               onChange={this.onChange}
               value={this.state.email === null ? "" : this.state.email}
             />
-            {this.state.errors && <Alert>{this.state.errors.email}</Alert>}
           </FormGroup>
           <FormGroup>
             <Label for="confirm">Confirm Email</Label>
@@ -136,9 +156,6 @@ class SignUp extends Component {
                   : this.state.confirm_email
               }
             />
-            {this.state.errors && (
-              <Alert>{this.state.errors.confirm_email}</Alert>
-            )}
           </FormGroup>
           <FormGroup>
             <Label for="password">Password</Label>
@@ -150,7 +167,6 @@ class SignUp extends Component {
               value={this.state.password === null ? "" : this.state.password}
               errors={this.state.errors}
             />
-            {this.state.errors && <Alert>{this.state.errors.password}</Alert>}
           </FormGroup>
 
           <Button color="secondary" size="lg" block>

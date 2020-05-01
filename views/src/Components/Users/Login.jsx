@@ -18,6 +18,7 @@ class Login extends Component {
     username: "",
     password: "",
     errors: {},
+    classname: "invisible",
   };
 
   findUser = () => {
@@ -38,12 +39,17 @@ class Login extends Component {
 
   validateLogIn = () => {
     const errors = {};
+    let classname = "visible";
 
     if (this.state.username.trim() === "") {
       errors.username = "Username is required";
+
+      this.setState({ classname });
     }
     if (this.state.password.trim() === "") {
       errors.password = "Password is required";
+
+      this.setState({ classname });
     }
 
     return Object.keys(errors).length === 0 ? null : errors;
@@ -87,6 +93,14 @@ class Login extends Component {
   render() {
     return (
       <Container>
+        <div className={this.state.classname}>
+          {this.state.errors && (
+            <Alert className="alert-danger">{this.state.errors.username}</Alert>
+          )}
+          {this.state.errors && (
+            <Alert className="alert-danger">{this.state.errors.password}</Alert>
+          )}
+        </div>
         <Form style={{ margin: "50px 0" }}>
           {this.renderRedirectAfterLogIn()}
           <FormGroup row>
@@ -102,7 +116,6 @@ class Login extends Component {
                 bsSize="lg"
                 onChange={this.handleUsername.bind(this)}
               />
-              {this.state.errors && <Alert>{this.state.errors.username}</Alert>}
             </Col>
           </FormGroup>
           <FormGroup row>
@@ -117,7 +130,6 @@ class Login extends Component {
                 placeholder="password"
                 onChange={this.handlePassword.bind(this)}
               />
-              {this.state.errors && <Alert>{this.state.errors.password}</Alert>}
             </Col>
           </FormGroup>
           <Button
