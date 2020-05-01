@@ -1,5 +1,16 @@
 import React, { Component } from "react";
-import { Row, Col, FormGroup, Fade, Input, Button, Badge } from "reactstrap";
+import {
+  Row,
+  Col,
+  FormGroup,
+  Fade,
+  Input,
+  Button,
+  Badge,
+  Modal,
+  ModalBody,
+  ModalFooter,
+} from "reactstrap";
 
 class RouteForm extends Component {
   state = {
@@ -8,6 +19,7 @@ class RouteForm extends Component {
     name: "",
     method: "",
     route: this.props.route,
+    modal: false,
   };
 
   addRoute() {
@@ -36,6 +48,12 @@ class RouteForm extends Component {
       .catch((err) => console.log(err));
   }
 
+  handleModal = () => {
+    this.setState({
+      modal: !this.state.modal,
+    });
+  };
+
   handleFadeIn() {
     this.setState({ fadeIn: !this.state.fadeIn });
   }
@@ -60,6 +78,8 @@ class RouteForm extends Component {
   };
 
   render() {
+    const { modal } = this.state;
+
     const saveRoute = () => {
       const { name, method, origin, destination, route } = this.state;
       route.push(name, method, origin, destination);
@@ -71,7 +91,7 @@ class RouteForm extends Component {
         <Row form>
           <Col md={6}>
             <FormGroup>
-              <Badge color="success">FROM</Badge>
+              <Badge color="dark">FROM</Badge>
               <Input
                 onChange={this.handlePostcode.bind(this)}
                 placeholder="Place origin POSTCODE"
@@ -80,7 +100,7 @@ class RouteForm extends Component {
           </Col>
           <Col md={6}>
             <FormGroup>
-              <Badge color="success">TO</Badge>
+              <Badge color="dark">TO</Badge>
               <Input
                 onChange={this.handlePostcode.bind(this)}
                 placeholder="Place destination POSTCODE"
@@ -88,31 +108,50 @@ class RouteForm extends Component {
             </FormGroup>
           </Col>
         </Row>
-        <Button color="success" onClick={() => this.handleFadeIn()}>
+        <Button
+          style={{ padding: 5, margin: 5 }}
+          color="dark"
+          onClick={this.props.calculateRoute}
+        >
+          Route it
+        </Button>
+        <Button
+          style={{ padding: 5, margin: 5 }}
+          color="dark"
+          onClick={this.handleModal}
+        >
           Save route
         </Button>
         <Fade in={this.state.fadeIn} tag="h5" className="mt-3">
           <div>
-            <FormGroup>
-              <Badge color="success">NAME OF THE ROUTE</Badge>
-              <Input
-                onChange={this.handleName.bind(this)}
-                placeholder="Work, Home, Shop..."
-              />
-            </FormGroup>
-            <FormGroup>
-              <Badge color="success">METHOD</Badge>
-              <Input
-                onChange={this.handleMethod.bind(this)}
-                placeholder="WALKING or DRIVING"
-              />
-            </FormGroup>
-            <Button onClick={saveRoute}>Save it</Button>
+            <Modal isOpen={modal} toggle={this.handleModal}>
+              <ModalBody>Name your route and save it</ModalBody>
+              <div style={{ padding: 5, margin: 5 }}>
+                <FormGroup>
+                  <Badge color="dark">NAME OF THE ROUTE</Badge>
+                  <Input
+                    onChange={this.handleName.bind(this)}
+                    placeholder="Work, Home, Shop..."
+                  />
+                </FormGroup>
+                <Button
+                  color="dark"
+                  style={{ padding: 5, margin: 5 }}
+                  onClick={saveRoute}
+                >
+                  Save it
+                </Button>
+                <Button
+                  style={{ padding: 5, margin: 5 }}
+                  color="dark"
+                  onClick={this.handleModal}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </Modal>
           </div>
         </Fade>
-        <Button color="success" onClick={this.props.calculateRoute}>
-          Route it
-        </Button>
       </div>
     );
   }
