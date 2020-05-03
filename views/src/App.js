@@ -11,6 +11,7 @@ import SignUp from "./Components/Users/Signup";
 import Login from "./Components/Users/Login";
 import UserPage from "./Components/Users/UserPage";
 import Profile from "./Components/Users/profile";
+import LogOut from "./Components/Users/logout";
 
 class App extends Component {
   render() {
@@ -27,6 +28,7 @@ class App extends Component {
             <Route exact path="/userpage" component={UserPage} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/about" component={About} />
+            <Route exact path="/logout" component={LogOut} />
             <Redirect exact path="/" exact to="/home" />
             <Route path="/*" component={NotFound} />
           </Switch>
