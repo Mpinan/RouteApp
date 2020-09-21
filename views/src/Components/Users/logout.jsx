@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Container, Button } from "reactstrap";
 
 const LogOut = () => {
@@ -11,7 +11,9 @@ const LogOut = () => {
       </b>
       <div>
         <div className="text-center">
-          <Button href="/home" color="dark">Press to return home</Button>
+          <Button href="/home" color="dark">
+            Press to return home
+          </Button>
         </div>
       </div>
     </Container>

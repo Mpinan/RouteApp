@@ -29,7 +29,7 @@ class App extends Component {
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/about" component={About} />
             <Route exact path="/logout" component={LogOut} />
-            <Redirect exact path="/" exact to="/home" />
+            <Redirect exact path="/" to="/home" />
             <Route path="/*" component={NotFound} />
           </Switch>
         </BrowserRouter>

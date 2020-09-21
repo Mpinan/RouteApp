@@ -5,7 +5,7 @@ import { Container } from "reactstrap";
 import { Map, InfoWindow, GoogleApiWrapper } from "google-maps-react";
 
 const apiKey = "AIzaSyDro0XKEZYd8mj42cXWVukmO0WKJstaAYs&callback=";
-const apiKey2 = "AIzaSyBIGLbrD_tHjQZFi1GQ61wRi_ltzkJ8w3A";
+// const apiKey2 = "AIzaSyBIGLbrD_tHjQZFi1GQ61wRi_ltzkJ8w3A";
 
 export class MapContainer extends React.Component {
   state = {
@@ -43,7 +43,9 @@ export class MapContainer extends React.Component {
     let destination = route[1];
 
     this.displayRouteService(origin, destination);
-    this.state.route = [];
+    let resetRoute = [];
+    this.setState({ route: resetRoute });
+    // this.state.route = [];
   }
 
   // route calculate response
@@ -105,9 +107,7 @@ export class MapContainer extends React.Component {
               centerAroundCurrentLocation={true}
             >
               <InfoWindow>
-                <div className="marker">
-                  <a href=""></a>
-                </div>
+                <div className="marker">{/* <a href=""></a> */}</div>
               </InfoWindow>
             </Map>
           </div>
